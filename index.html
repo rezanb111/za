@@ -1,603 +1,167 @@
-<!doctype html>
-<html lang="fa" dir="rtl">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>تحقیق جامع تکنولوژی و تولید محتوا</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --paper:#ffffff;
-      --ink:#111827;
-      --muted:#64748b;
-      --line:#d8e2f0;
-      --blue:#1d4ed8;
-      --sky:#0ea5e9;
-      --cyan:#22d3ee;
-      --gold:#d6a13d;
-      --gold2:#f5d076;
-      --navy:#0f172a;
-      --green:#10b981;
-      --rose:#e11d48;
-      --violet:#7c3aed;
-      --soft:#f8fbff;
+ircle at 22% 18%,rgba(56,232,255,.22),transparent 28%),
+        radial-gradient(circle at 80% 22%,rgba(216,170,69,.20),transparent 30%),
+        linear-gradient(135deg,rgba(2,6,23,.94),rgba(8,28,52,.86)),
+        url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format&fit=crop") center/cover;
     }
 
-    *{
-      box-sizing:border-box;
-      -webkit-print-color-adjust:exact !important;
-      print-color-adjust:exact !important;
-    }
-
-    body{
-      margin:0;
-      font-family:"Vazirmatn", Tahoma, Arial, sans-serif;
-      line-height:1.85;
-      color:var(--ink);
-      background:
-        radial-gradient(circle at 10% 8%, rgba(34,211,238,.22), transparent 26%),
-        radial-gradient(circle at 88% 18%, rgba(245,208,118,.26), transparent 30%),
-        radial-gradient(circle at 42% 88%, rgba(124,58,237,.15), transparent 34%),
-        #edf3fb;
-    }
-
-    .toolbar{
-      position:sticky;
-      top:0;
-      z-index:9999;
-      display:flex;
+    .cover .inner{
       justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      padding:12px 22px;
-      color:white;
-      background:rgba(15,23,42,.94);
-      backdrop-filter:blur(14px);
-      box-shadow:0 12px 35px rgba(15,23,42,.25);
+      padding:18mm;
     }
 
-    .toolbar-title{
-      font-size:14px;
-      font-weight:900;
+    .cover-title{
+      text-align:center;
+      padding-top:20mm;
     }
 
-    .toolbar-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .toolbar button{
-      border:0;
-      cursor:pointer;
-      font-family:inherit;
-      font-weight:900;
+    .cover-title .kicker{
+      display:inline-block;
+      padding:6px 18px;
       border-radius:999px;
-      padding:10px 16px;
-      color:#111827;
-      background:linear-gradient(135deg,var(--gold2),var(--gold));
-      box-shadow:0 10px 24px rgba(214,161,61,.30);
-    }
-
-    .toolbar button.secondary{
-      background:linear-gradient(135deg,#dbeafe,#67e8f9);
-    }
-
-    .book{
-      padding:26px 0 60px;
-    }
-
-    .sheet{
-      width:210mm;
-      height:297mm;
-      margin:0 auto 24px;
-      position:relative;
-      overflow:hidden;
-      background:var(--paper);
-      box-shadow:0 26px 70px rgba(15,23,42,.22);
-      page-break-after:always;
-      break-after:page;
-    }
-
-    .sheet::before{
-      content:"";
-      position:absolute;
-      inset:9mm;
-      z-index:4;
-      pointer-events:none;
-      border-radius:24px;
-      border:1.6px solid rgba(214,161,61,.90);
-      background:
-        linear-gradient(90deg, rgba(214,161,61,.95) 0 54px, transparent 54px calc(100% - 54px), rgba(214,161,61,.95) calc(100% - 54px)) top/100% 2px no-repeat,
-        linear-gradient(90deg, rgba(214,161,61,.95) 0 54px, transparent 54px calc(100% - 54px), rgba(214,161,61,.95) calc(100% - 54px)) bottom/100% 2px no-repeat,
-        linear-gradient(0deg, rgba(29,78,216,.78) 0 54px, transparent 54px calc(100% - 54px), rgba(29,78,216,.78) calc(100% - 54px)) right/2px 100% no-repeat,
-        linear-gradient(0deg, rgba(29,78,216,.78) 0 54px, transparent 54px calc(100% - 54px), rgba(29,78,216,.78) calc(100% - 54px)) left/2px 100% no-repeat;
-    }
-
-    .sheet::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      z-index:1;
-      pointer-events:none;
-      background:
-        radial-gradient(circle at 7% 8%, rgba(34,211,238,.13), transparent 18%),
-        radial-gradient(circle at 94% 90%, rgba(214,161,61,.14), transparent 22%),
-        linear-gradient(135deg, rgba(29,78,216,.052), transparent 38%),
-        linear-gradient(315deg, rgba(124,58,237,.045), transparent 42%);
-    }
-
-    .corner{
-      position:absolute;
-      width:31mm;
-      height:31mm;
-      z-index:5;
-      pointer-events:none;
-      opacity:.95;
-    }
-
-    .corner::before,
-    .corner::after{
-      content:"";
-      position:absolute;
-      border-radius:999px;
-      border:1.5px solid rgba(214,161,61,.86);
-    }
-
-    .corner::before{inset:4mm}
-    .corner::after{inset:9mm;border-color:rgba(29,78,216,.52)}
-    .tr{top:5.5mm;right:5.5mm}
-    .tl{top:5.5mm;left:5.5mm}
-    .br{bottom:5.5mm;right:5.5mm}
-    .bl{bottom:5.5mm;left:5.5mm}
-
-    .page-inner{
-      position:relative;
-      z-index:10;
-      height:100%;
-      padding:17mm 17mm 13.5mm;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .topbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      min-height:34px;
-      padding-bottom:7px;
-      border-bottom:1.6px solid var(--line);
-    }
-
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:7px;
-      padding:5px 12px;
-      border-radius:999px;
-      font-size:10px;
+      border:1px solid rgba(255,224,138,.55);
+      color:#fff2b8;
+      background:rgba(216,170,69,.10);
       font-weight:900;
-      color:#1e3a8a;
-      background:linear-gradient(135deg,#eff6ff,#e0f2fe);
-      border:1px solid #bfdbfe;
-      white-space:nowrap;
-    }
-
-    .mini{
-      color:var(--muted);
-      font-size:9.7px;
-      font-weight:800;
-    }
-
-    h1,h2,h3,p{
-      margin:0;
-    }
-
-    h1{
-      color:#0f172a;
-      font-size:32px;
-      line-height:1.55;
-      font-weight:900;
-      letter-spacing:-.4px;
-    }
-
-    h2{
-      color:#102a54;
-      font-size:18px;
-      line-height:1.55;
-      font-weight:900;
-      padding-right:12px;
-      border-right:6px solid var(--gold);
-    }
-
-    h3{
-      color:#1d4ed8;
       font-size:12px;
-      font-weight:900;
+      margin-bottom:14px;
     }
 
-    .lead{
-      font-size:11.25px;
-      line-height:1.9;
-      color:#334155;
-      text-align:justify;
-      font-weight:500;
-    }
-
-    .text{
-      font-size:9.85px;
-      line-height:1.88;
-      color:#243044;
-      text-align:justify;
-    }
-
-    .content-grid{
-      display:grid;
-      grid-template-columns:1.08fr .92fr;
-      gap:10px;
-      min-height:0;
-    }
-
-    .card{
-      border:1px solid var(--line);
-      border-radius:19px;
-      background:rgba(255,255,255,.92);
-      padding:10px;
-      box-shadow:0 13px 30px rgba(15,23,42,.07);
-    }
-
-    .visual{
-      position:relative;
-      height:144px;
-      overflow:hidden;
-      border-radius:22px;
-      background:#0f172a;
-      border:1px solid rgba(15,23,42,.10);
-      box-shadow:0 18px 38px rgba(15,23,42,.18);
-    }
-
-    .visual.large{
-      height:195px;
-    }
-
-    .visual img{
-      width:100%;
-      height:100%;
-      display:block;
-      object-fit:cover;
-      filter:saturate(1.12) contrast(1.05);
-    }
-
-    .visual-caption{
-      position:absolute;
-      inset:auto 0 0;
-      padding:13px 12px 9px;
-      color:white;
-      font-size:9.5px;
-      font-weight:900;
-      background:linear-gradient(to top,rgba(15,23,42,.92),rgba(15,23,42,.02));
-    }
-
-    .quote{
-      padding:11px;
-      border-radius:19px;
-      color:white;
-      background:
-        linear-gradient(135deg,rgba(15,23,42,.96),rgba(30,58,138,.92)),
-        radial-gradient(circle at 20% 18%, rgba(34,211,238,.34), transparent 30%);
-      box-shadow:0 16px 34px rgba(30,58,138,.24);
-      font-size:9.9px;
-      line-height:1.8;
-      text-align:justify;
-    }
-
-    .quote b{
-      color:#fde68a;
-    }
-
-    .info-list{
-      display:grid;
-      gap:6px;
-    }
-
-    .info-item{
-      display:flex;
-      gap:7px;
-      align-items:flex-start;
-      padding:7px;
-      border-radius:14px;
-      background:linear-gradient(135deg,#f8fafc,#ffffff);
-      border:1px solid #e2e8f0;
-      color:#334155;
-      font-size:9.35px;
-      line-height:1.75;
-      text-align:justify;
-    }
-
-    .dot{
-      width:8px;
-      height:8px;
-      margin-top:7px;
-      flex:0 0 auto;
-      border-radius:50%;
-      background:var(--gold);
-      box-shadow:0 0 0 4px rgba(214,161,61,.17);
-    }
-
-    .bottom-band{
-      margin-top:auto;
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:8px;
-    }
-
-    .bottom-card{
-      min-height:88px;
-      padding:8px;
-      border-radius:17px;
-      border:1px solid #dbeafe;
-      background:linear-gradient(135deg,rgba(239,246,255,.96),rgba(255,255,255,.92));
-      box-shadow:0 11px 24px rgba(15,23,42,.06);
-    }
-
-    .bottom-card:nth-child(2){
-      border-color:#dcfce7;
-      background:linear-gradient(135deg,rgba(240,253,244,.96),rgba(255,255,255,.92));
-    }
-
-    .bottom-card:nth-child(3){
-      border-color:#fef3c7;
-      background:linear-gradient(135deg,rgba(255,251,235,.96),rgba(255,255,255,.92));
-    }
-
-    .bottom-card h3{
-      margin-bottom:3px;
-      font-size:10.3px;
-    }
-
-    .bottom-card p{
-      color:#334155;
-      font-size:8.7px;
-      line-height:1.7;
-      text-align:justify;
-    }
-
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:7px;
-    }
-
-    .stat{
-      padding:7px 5px;
-      text-align:center;
-      border-radius:15px;
-      border:1px solid #e2e8f0;
-      background:#f8fafc;
-    }
-
-    .stat b{
-      display:block;
-      color:#1d4ed8;
-      font-size:14px;
-      line-height:1.2;
-      font-weight:900;
-    }
-
-    .stat span{
-      color:#64748b;
-      font-size:8.3px;
-      font-weight:800;
-    }
-
-    .footer{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      padding-top:6px;
-      border-top:1px solid var(--line);
-      color:#64748b;
-      font-size:8.8px;
-      font-weight:800;
-    }
-
-    .page-no{
-      width:26px;
-      height:26px;
-      display:grid;
-      place-items:center;
-      border-radius:50%;
-      color:white;
-      font-size:10px;
-      background:linear-gradient(135deg,var(--blue),var(--cyan));
-      box-shadow:0 10px 22px rgba(29,78,216,.24);
-    }
-
-    .cover{
-      color:white;
-      background:
-        linear-gradient(135deg,rgba(6,12,28,.96),rgba(17,45,100,.84)),
-        url("https://picsum.photos/seed/professional-content-technology-cover/1800/2600") center/cover no-repeat;
-    }
-
-    .cover::before{
-      border-color:rgba(255,255,255,.38);
-      background:
-        linear-gradient(90deg, rgba(255,255,255,.72) 0 62px, transparent 62px calc(100% - 62px), rgba(255,255,255,.72) calc(100% - 62px)) top/100% 2px no-repeat,
-        linear-gradient(90deg, rgba(255,255,255,.72) 0 62px, transparent 62px calc(100% - 62px), rgba(255,255,255,.72) calc(100% - 62px)) bottom/100% 2px no-repeat,
-        linear-gradient(0deg, rgba(245,208,118,.72) 0 62px, transparent 62px calc(100% - 62px), rgba(245,208,118,.72) calc(100% - 62px)) right/2px 100% no-repeat,
-        linear-gradient(0deg, rgba(245,208,118,.72) 0 62px, transparent 62px calc(100% - 62px), rgba(245,208,118,.72) calc(100% - 62px)) left/2px 100% no-repeat;
-    }
-
-    .cover .page-inner{
-      padding:19mm;
-      justify-content:space-between;
-    }
-
-    .cover-kicker{
-      display:inline-flex;
-      align-self:center;
-      padding:8px 18px;
-      border-radius:999px;
-      color:#fde68a;
-      font-size:13px;
-      font-weight:900;
-      border:1px solid rgba(255,255,255,.25);
-      background:rgba(255,255,255,.10);
-      backdrop-filter:blur(10px);
-    }
-
-    .cover-title-box{
-      padding:24px 22px;
-      border-radius:30px;
-      text-align:center;
-      background:rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.25);
-      backdrop-filter:blur(14px);
-      box-shadow:0 28px 80px rgba(0,0,0,.32);
-    }
-
-    .cover h1{
-      color:white;
+    .cover-title h1{
       font-size:36px;
-      line-height:1.55;
-      text-shadow:0 14px 32px rgba(0,0,0,.35);
+      line-height:1.6;
     }
 
-    .cover-sub{
-      margin-top:12px;
-      color:#dbeafe;
+    .cover-title p{
+      color:#cfe7ff;
       font-size:15px;
-      line-height:1.8;
-      font-weight:800;
+      font-weight:700;
+      margin-top:8px;
+    }
+
+    .cover-panel{
+      border-radius:28px;
+      padding:18px;
+      background:rgba(4,14,27,.72);
+      border:1px solid rgba(216,170,69,.38);
+      box-shadow:0 25px 60px rgba(0,0,0,.45), inset 0 0 35px rgba(56,232,255,.04);
+      backdrop-filter:blur(10px);
     }
 
     .cover-table{
       width:100%;
       border-collapse:separate;
       border-spacing:0 9px;
-      font-size:12.4px;
+      font-size:13px;
     }
 
     .cover-table td{
-      padding:10px 12px;
-      border-top:1px solid rgba(255,255,255,.21);
-      border-bottom:1px solid rgba(255,255,255,.21);
-      background:rgba(255,255,255,.11);
+      padding:10px 13px;
+      background:rgba(255,255,255,.045);
+      border-top:1px solid rgba(255,255,255,.08);
+      border-bottom:1px solid rgba(255,255,255,.08);
     }
 
     .cover-table td:first-child{
-      width:35%;
-      color:#fde68a;
+      width:33%;
+      color:#ffe08a;
       font-weight:900;
       border-radius:0 15px 15px 0;
     }
 
     .cover-table td:last-child{
-      color:white;
+      color:#edf7ff;
       font-weight:800;
       border-radius:15px 0 0 15px;
     }
 
-    .cover-note{
-      color:#e0f2fe;
-      font-size:10.7px;
-      line-height:1.9;
-      text-align:center;
-      font-weight:600;
-    }
-
-    .toc-grid{
+    .toc-wrap{
       display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px 15px;
+      grid-template-columns:1fr;
+      gap:6px;
+      margin-top:2px;
     }
 
     .toc-item{
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:10px;
-      padding:7px 9px;
-      border-radius:14px;
-      background:linear-gradient(135deg,#f8fafc,#ffffff);
-      border:1px dashed #cbd5e1;
-      font-size:10px;
+      align-items:center;
+      gap:12px;
+      padding:7px 10px;
+      border-radius:13px;
+      color:#dceeff;
+      background:rgba(255,255,255,.035);
+      border:1px solid rgba(56,232,255,.10);
+      font-size:9.6px;
       font-weight:800;
-      color:#334155;
+    }
+
+    .toc-item:nth-child(odd){
+      border-color:rgba(216,170,69,.16);
+      background:rgba(216,170,69,.045);
     }
 
     .toc-num{
-      min-width:25px;
-      height:25px;
+      min-width:28px;
+      height:24px;
+      border-radius:999px;
       display:grid;
       place-items:center;
-      border-radius:50%;
-      color:white;
-      background:linear-gradient(135deg,var(--blue),var(--cyan));
-      font-size:9px;
+      color:#06101d;
+      background:linear-gradient(135deg,var(--gold2),var(--gold));
       font-weight:900;
     }
 
     .refs{
-      font-size:9.7px;
-      line-height:1.9;
+      margin:0;
+      padding-right:18px;
+      color:#cfe7ff;
+      font-size:8.7px;
+      line-height:1.78;
       text-align:justify;
-      color:#253247;
     }
 
-    .refs li{
-      margin-bottom:6px;
-    }
+    .refs li{margin-bottom:5px}
 
-    .download-page .big-button{
-      margin:auto;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:12px;
-      min-height:210px;
-      border-radius:30px;
-      color:white;
+    .final-hero{
+      border-radius:28px;
+      padding:18px;
       text-align:center;
       background:
-        linear-gradient(135deg,rgba(15,23,42,.96),rgba(29,78,216,.88)),
-        radial-gradient(circle at 20% 25%, rgba(34,211,238,.34), transparent 30%);
-      box-shadow:0 22px 55px rgba(29,78,216,.25);
-      padding:24px;
+        radial-gradient(circle at 18% 20%,rgba(56,232,255,.16),transparent 30%),
+        radial-gradient(circle at 82% 30%,rgba(216,170,69,.16),transparent 32%),
+        linear-gradient(135deg,rgba(10,34,58,.92),rgba(5,14,26,.92));
+      border:1px solid rgba(216,170,69,.34);
+      box-shadow:0 25px 60px rgba(0,0,0,.36), inset 0 0 35px rgba(56,232,255,.04);
     }
 
-    .download-page .big-button button{
-      border:0;
-      cursor:pointer;
-      font-family:inherit;
-      font-size:14px;
-      font-weight:900;
-      padding:13px 24px;
-      border-radius:999px;
-      color:#111827;
-      background:linear-gradient(135deg,var(--gold2),var(--gold));
-      box-shadow:0 12px 28px rgba(214,161,61,.30);
+    .final-hero h1{
+      font-size:28px;
+      color:#fff7d6;
     }
 
-    .download-page .big-button p{
-      max-width:560px;
-      color:#dbeafe;
-      font-size:11px;
-      line-height:1.9;
+    .final-hero p{
+      color:#cfe7ff;
+      font-size:10.3px;
       text-align:center;
-      font-weight:600;
+      line-height:1.85;
+      margin-top:8px;
+    }
+
+    .download-btn{
+      margin-top:12px;
+      border:1px solid rgba(255,224,138,.65);
+      background:linear-gradient(135deg,var(--gold2),var(--gold));
+      color:#06101d;
+      border-radius:999px;
+      padding:12px 28px;
+      font-family:inherit;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 0 28px rgba(216,170,69,.28);
     }
 
     @media print{
-      body{background:white}
+      body{background:#050b14}
       .toolbar{display:none}
       .book{padding:0}
       .sheet{
@@ -611,19 +175,13 @@
     }
 
     @media screen and (max-width:900px){
-      .toolbar{
-        flex-direction:column;
-        align-items:stretch;
-      }
-
-      .toolbar-actions{
-        justify-content:center;
-      }
-
       .sheet{
         transform:scale(.58);
         transform-origin:top center;
-        margin-bottom:-122mm;
+        margin-bottom:-125mm;
+      }
+      .toolbar{
+        flex-direction:column;
       }
     }
   </style>
@@ -631,487 +189,317 @@
 
 <body>
   <div class="toolbar">
-    <div class="toolbar-title">تحقیق جامع تکنولوژی و تولید محتوا</div>
-    <div class="toolbar-actions">
-      <button type="button" onclick="window.print()">چاپ</button>
-      <button type="button" class="secondary" onclick="downloadPDF()">دانلود PDF مرتب</button>
+    <div><b>تحقیق آماده ارائه:</b> تکنولوژی و تولید محتوا</div>
+    <div>
+      <button class="alt" onclick="window.print()">چاپ / ذخیره PDF</button>
+      <button onclick="downloadPDF()">دانلود PDF مرتب</button>
     </div>
   </div>
 
-  <main class="book" id="book"></main>
+  <main id="book" class="book"></main>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script>
     const meta = {
-      title: "تحقیق جامع درباره تکنولوژی و تولید محتوا",
-      subtitle: "بررسی نقش فناوری‌های نوین در طراحی، تولید، انتشار، تحلیل و توسعه محتوای دیجیتال",
-      researchers: "زکیه مهدوی و نادیا باقری حیدری",
-      advisor: "غلام‌پور",
-      university: "دانشگاه علمی کاربردی، واحد نجف‌آباد",
-      date: "۱۹ اردیبهشت ۱۴۰۵"
+      title:"تحقیق جامع درباره تکنولوژی و تولید محتوا",
+      researchers:"زکیه مهدوی و نادیا باقری حیدری",
+      advisor:"غلام‌پور",
+      university:"دانشگاه علمی کاربردی واحد نجف‌آباد",
+      date:"۱۹ اردیبهشت ۱۴۰۵"
     };
 
     const chapters = [
       {
-        title:"مقدمه و طرح مسئله",
+        title:"مقدمه؛ پیوند تکنولوژی و محتوای معاصر",
         tag:"Introduction",
-        seed:"digital-content-introduction",
-        quote:"تولید محتوا در جهان امروز فقط نوشتن چند جمله یا انتشار یک تصویر نیست؛ این فرایند ترکیبی از شناخت انسان، فناوری، رسانه، تحلیل داده و طراحی تجربه است.",
+        seed:"digital-content-intro-dark",
+        quote:"تکنولوژی فقط ابزار انتشار نیست؛ زبان تازه‌ای برای اندیشیدن، روایت کردن و اثرگذاری اجتماعی است.",
         paragraphs:[
-          "در دهه‌های گذشته، تولید محتوا بیشتر به فعالیت‌هایی مانند نگارش متن، چاپ بروشور، تهیه گزارش، ساخت برنامه‌های رادیویی و تلویزیونی یا انتشار مطالب در رسانه‌های سنتی محدود بود. اما با گسترش اینترنت، تلفن‌های هوشمند، شبکه‌های اجتماعی، پلتفرم‌های ویدئویی، ابزارهای طراحی و سامانه‌های مدیریت محتوا، مفهوم محتوا به شکل عمیقی تغییر کرد. امروز محتوا می‌تواند متن، تصویر، ویدئو، پادکست، اینفوگرافیک، تجربه تعاملی، دوره آموزشی، خبرنامه، صفحه فرود، پست شبکه اجتماعی، گزارش داده‌محور یا حتی یک بازی آموزشی باشد.",
-          "اهمیت این موضوع زمانی بیشتر می‌شود که بدانیم بسیاری از تصمیم‌های روزمره افراد، از خرید کالا و انتخاب خدمات تا یادگیری، سرگرمی، مشارکت اجتماعی و حتی شکل‌گیری دیدگاه‌ها، تحت تأثیر محتوایی است که در فضای دیجیتال دریافت می‌کنند. به همین دلیل تولید محتوا به یک فعالیت ساده و حاشیه‌ای محدود نمی‌شود، بلکه به یکی از پایه‌های اصلی ارتباطات، آموزش، بازاریابی، رسانه، فرهنگ و اقتصاد دیجیتال تبدیل شده است.",
-          "تکنولوژی در این میان نقش شتاب‌دهنده دارد. ابزارهای جدید باعث شده‌اند ایده‌ها سریع‌تر به محتوا تبدیل شوند، محتوا با کیفیت بالاتری منتشر شود، رفتار مخاطبان بهتر تحلیل گردد و فرایند اصلاح و توسعه محتوا دقیق‌تر انجام شود. با این حال، ابزار به‌تنهایی کیفیت ایجاد نمی‌کند. محتوای موفق نیازمند پژوهش، استراتژی، اصالت، زیبایی بصری، لحن مناسب، اخلاق حرفه‌ای و درک درست از مخاطب است."
-        ],
-        points:["تولید محتوا یک فرایند چندرشته‌ای است.","تکنولوژی سرعت، کیفیت و دامنه انتشار محتوا را افزایش داده است.","محتوای ارزشمند بر پایه شناخت مخاطب، هدف روشن و پیام معتبر شکل می‌گیرد."],
-        practical:"در آغاز هر پروژه محتوایی باید مسئله اصلی، هدف انتشار، مخاطب هدف، کانال ارائه و شاخص ارزیابی مشخص شود. بدون این نقشه اولیه، حتی محتوای زیبا نیز ممکن است نتیجه دقیق نداشته باشد.",
-        checklist:"تعریف هدف، شناخت مخاطب، انتخاب قالب، تعیین زمان‌بندی انتشار و طراحی معیار سنجش، پنج گام ضروری شروع کار هستند.",
-        key:"مقدمه تحقیق نشان می‌دهد که محتوا، نقطه اتصال تکنولوژی و ارتباط انسانی است."
-      },
-      {
-        title:"مفهوم تکنولوژی در عصر دیجیتال",
-        tag:"Technology",
-        seed:"modern-technology",
-        quote:"تکنولوژی فقط ابزار نیست؛ شیوه‌ای برای حل مسئله، افزایش توان انسان و ساختن روش‌های تازه ارتباط و تولید است.",
-        paragraphs:[
-          "تکنولوژی را می‌توان مجموعه‌ای از دانش‌ها، ابزارها، روش‌ها و سیستم‌هایی دانست که برای ساده‌تر کردن کارها، افزایش دقت، کاهش زمان، بهبود کیفیت و توسعه امکانات انسان به کار می‌روند. در عصر دیجیتال، تکنولوژی از سطح ابزارهای فیزیکی فراتر رفته و به سامانه‌های نرم‌افزاری، شبکه‌های ارتباطی، داده‌های کلان، رایانش ابری، هوشمندسازی و پلتفرم‌های آنلاین گسترش یافته است.",
-          "در حوزه تولید محتوا، تکنولوژی باعث شده مسیر ایده تا انتشار کوتاه‌تر و حرفه‌ای‌تر شود. ابزارهای ویرایش متن، طراحی گرافیک، تدوین ویدئو، ضبط صدا، مدیریت پروژه، انتشار خودکار، تحلیل رفتار مخاطب و بهینه‌سازی موتورهای جست‌وجو، همگی بخشی از زیرساخت جدید تولید محتوا هستند. این ابزارها امکان می‌دهند افراد و سازمان‌ها پیام خود را با دقت و جذابیت بیشتری ارائه کنند.",
-          "با وجود این مزایا، استفاده از تکنولوژی نیازمند سواد دیجیتال است. کاربر باید بداند هر ابزار چه قابلیتی دارد، چه محدودیتی ایجاد می‌کند، چه داده‌هایی جمع‌آوری می‌کند و چگونه می‌توان از آن در راستای هدفی روشن استفاده کرد. در غیر این صورت، تکنولوژی به جای کمک، ممکن است باعث سردرگمی، تولید سطحی، وابستگی غیرضروری یا کاهش کیفیت تصمیم‌گیری شود."
-        ],
-        points:["تکنولوژی در تولید محتوا هم ابزار است و هم زیرساخت.","سواد دیجیتال شرط استفاده درست از امکانات نوین است.","ابزارهای جدید باید در خدمت هدف و پیام باشند، نه جایگزین تفکر."],
-        practical:"برای استفاده عملی، بهتر است هر تیم محتوایی یک جعبه‌ابزار ثابت داشته باشد؛ مثلاً یک ابزار برای برنامه‌ریزی، یک ابزار برای طراحی، یک ابزار برای انتشار و یک ابزار برای تحلیل. این کار از پراکندگی و اتلاف زمان جلوگیری می‌کند.",
-        checklist:"قبل از انتخاب ابزار باید نیاز پروژه، سطح مهارت تیم، هزینه، امنیت و امکان خروجی گرفتن بررسی شود.",
-        key:"تکنولوژی زمانی ارزشمند است که مسئله واقعی را حل کند و کیفیت کار را بالا ببرد."
-      },
-      {
-        title:"تحول تاریخی تولید محتوا",
-        tag:"History",
-        seed:"content-history",
-        quote:"تاریخ تولید محتوا، تاریخ تلاش انسان برای ثبت، انتقال و ماندگار کردن تجربه‌ها، دانش و روایت‌هاست.",
-        paragraphs:[
-          "تولید محتوا از آغاز تمدن انسانی وجود داشته است. نقاشی‌های دیواری، کتیبه‌ها، نسخه‌های خطی، کتاب‌ها، روزنامه‌ها، رادیو، تلویزیون و رسانه‌های دیجیتال هرکدام مرحله‌ای از مسیر طولانی انتقال پیام را نشان می‌دهند. تفاوت اصلی دوره امروز در سرعت تولید، تنوع قالب، گستردگی دسترسی و امکان تعامل مستقیم مخاطب با تولیدکننده محتواست.",
-          "در رسانه‌های سنتی، تولید و انتشار محتوا معمولاً در اختیار نهادهای محدود بود. چاپخانه‌ها، شبکه‌های رادیویی و تلویزیونی، روزنامه‌ها و ناشران بزرگ تعیین می‌کردند چه پیامی منتشر شود. اما با ظهور اینترنت، نقش مخاطبان تغییر کرد. افراد عادی نیز توانستند وبلاگ بنویسند، ویدئو منتشر کنند، پادکست بسازند، آموزش ارائه دهند و در شبکه‌های اجتماعی جامعه مخاطب خود را شکل دهند.",
-          "این تحول باعث دموکراتیک‌تر شدن تولید محتوا شده است، اما هم‌زمان مسئولیت بیشتری نیز ایجاد کرده است. وقتی امکان انتشار برای همه فراهم باشد، کیفیت، صحت، اخلاق، منبع‌دهی، احترام به حقوق دیگران و توانایی تشخیص محتوای معتبر اهمیت بیشتری پیدا می‌کند. بنابراین تاریخ محتوا فقط تاریخ ابزارها نیست، بلکه تاریخ تغییر قدرت ارتباطی در جامعه است."
-        ],
-        points:["محتوا از رسانه‌های محدود به رسانه‌های باز و مشارکتی رسیده است.","مخاطب امروز نقش فعال‌تری نسبت به گذشته دارد.","گسترش امکان انتشار، مسئولیت اخلاقی تولیدکنندگان را افزایش داده است."],
-        practical:"در تحلیل یک رسانه یا برند، بررسی سابقه محتوایی اهمیت دارد. اینکه یک مجموعه در طول زمان چه نوع پیامی منتشر کرده، چگونه لحن خود را تغییر داده و چه واکنشی از مخاطب گرفته، مسیر آینده را روشن‌تر می‌کند.",
-        checklist:"برای بررسی تاریخچه محتوا باید کانال‌ها، قالب‌ها، موضوعات پرتکرار، بازخوردها و نقاط تغییر مهم ثبت شود.",
-        key:"تحول تاریخی نشان می‌دهد که تولید محتوا همیشه با تحول ابزارهای ارتباطی پیوند داشته است."
-      },
-      {
-        title:"اکوسیستم تولید محتوای دیجیتال",
-        tag:"Ecosystem",
-        seed:"digital-ecosystem",
-        quote:"محتوای دیجیتال در یک اکوسیستم زنده حرکت می‌کند؛ تولید، انتشار، بازخورد، تحلیل و اصلاح، حلقه‌های اصلی این اکوسیستم هستند.",
-        paragraphs:[
-          "اکوسیستم تولید محتوای دیجیتال شامل مجموعه‌ای از افراد، ابزارها، پلتفرم‌ها، داده‌ها، قواعد و مخاطبان است که در کنار هم فرایند خلق و گردش محتوا را شکل می‌دهند. در این اکوسیستم، ایده‌پرداز، نویسنده، طراح، تدوینگر، مدیر شبکه اجتماعی، متخصص سئو، تحلیل‌گر داده، مدیر پروژه و مخاطب نهایی هرکدام نقشی مشخص دارند.",
-          "پلتفرم‌ها بخش مهمی از این اکوسیستم هستند. وب‌سایت، وبلاگ، فروشگاه اینترنتی، پیام‌رسان، شبکه اجتماعی، پلتفرم ویدئویی، سامانه آموزشی و خبرنامه ایمیلی هرکدام منطق و فرهنگ مصرف محتوای خاص خود را دارند. محتوایی که برای یک وب‌سایت رسمی مناسب است، الزاماً برای یک شبکه اجتماعی سریع و تصویری مناسب نیست.",
-          "موفقیت در این اکوسیستم نیازمند هماهنگی است. محتوا باید با هویت برند، نیاز مخاطب، استاندارد پلتفرم و هدف سازمان هم‌راستا باشد. همچنین چرخه تولید نباید پس از انتشار متوقف شود. بازخورد مخاطبان، داده‌های عملکردی و تغییرات محیطی باید به اصلاح محتوا و برنامه‌ریزی مراحل بعدی کمک کند."
-        ],
-        points:["اکوسیستم محتوا از افراد، ابزارها، پلتفرم‌ها و داده‌ها تشکیل می‌شود.","هر کانال انتشار زبان و قواعد خاص خود را دارد.","چرخه محتوا پس از انتشار با تحلیل و اصلاح ادامه پیدا می‌کند."],
-        practical:"برای مدیریت اکوسیستم محتوا، استفاده از تقویم محتوایی ضروری است. در این تقویم باید موضوع، مسئول اجرا، قالب، کانال انتشار، تاریخ انتشار، وضعیت تولید و شاخص ارزیابی ثبت شود.",
-        checklist:"تقویم محتوا، بانک ایده، آرشیو تصاویر، راهنمای لحن و گزارش ماهانه، ستون‌های اصلی مدیریت حرفه‌ای محتوا هستند.",
-        key:"اکوسیستم محتوا زمانی منظم می‌شود که همه اجزا با یک هدف مشترک کار کنند."
-      },
-      {
-        title:"استراتژی محتوا و هدف‌گذاری",
-        tag:"Strategy",
-        seed:"content-strategy",
-        quote:"استراتژی محتوا یعنی بدانیم چرا تولید می‌کنیم، برای چه کسی می‌نویسیم، چه ارزشی می‌سازیم و چگونه نتیجه را می‌سنجیم.",
-        paragraphs:[
-          "استراتژی محتوا نقشه راهی است که تصمیم‌های اصلی تولید، انتشار و مدیریت محتوا را مشخص می‌کند. بدون استراتژی، تولید محتوا به مجموعه‌ای از فعالیت‌های پراکنده تبدیل می‌شود؛ ممکن است مطالب زیادی منتشر شود اما هیچ مسیر روشنی برای رشد، اعتمادسازی یا اثرگذاری ایجاد نکند. استراتژی خوب کمک می‌کند منابع محدود به بهترین شکل استفاده شوند.",
-          "در طراحی استراتژی باید ابتدا هدف مشخص شود. هدف می‌تواند افزایش آگاهی، آموزش مخاطب، جذب مشتری، بهبود اعتبار، فروش، وفادارسازی، اطلاع‌رسانی یا ایجاد جامعه باشد. سپس مخاطب هدف، پیام اصلی، لحن ارتباط، کانال‌های انتشار، نوع قالب‌ها، زمان‌بندی، بودجه و شاخص‌های سنجش تعیین می‌شود.",
-          "استراتژی محتوا باید منعطف باشد. فضای دیجیتال دائماً تغییر می‌کند و رفتار مخاطبان نیز ثابت نیست. بنابراین برنامه محتوایی باید در بازه‌های مشخص ارزیابی و اصلاح شود. داده‌ها، بازخوردها، روندهای جدید و تغییر نیازهای مخاطب باید در تصمیم‌گیری‌های بعدی اثرگذار باشند."
-        ],
-        points:["استراتژی محتوا مانع پراکندگی و فعالیت بی‌هدف می‌شود.","هدف، مخاطب، پیام و شاخص سنجش باید از ابتدا روشن باشند.","استراتژی باید قابل اصلاح و متناسب با تغییرات محیط باشد."],
-        practical:"در عمل، برای هر پروژه یک سند کوتاه استراتژی تهیه می‌شود. این سند شامل هدف، پرسونای مخاطب، پیام محوری، ستون‌های محتوایی، فرکانس انتشار و معیارهای موفقیت است.",
-        checklist:"اگر برای یک محتوا نتوان هدف، مخاطب و اقدام مورد انتظار را توضیح داد، بهتر است قبل از تولید، برنامه آن بازنگری شود.",
-        key:"استراتژی، ستون فقرات تولید محتوای حرفه‌ای است."
-      },
-      {
-        title:"شناخت مخاطب و طراحی پرسونا",
-        tag:"Audience",
-        seed:"audience-persona",
-        quote:"محتوا زمانی اثرگذار است که زبان، دغدغه، نیاز و سطح آگاهی مخاطب را بشناسد.",
-        paragraphs:[
-          "شناخت مخاطب یکی از مهم‌ترین مراحل تولید محتواست. بسیاری از محتواها به این دلیل نتیجه نمی‌گیرند که برای مخاطبی نامشخص تولید شده‌اند. مخاطب باید از نظر سن، نیاز، هدف، سطح دانش، دغدغه، سبک مصرف رسانه، محدودیت‌ها و انگیزه‌ها بررسی شود. هرچه تصویر دقیق‌تری از مخاطب وجود داشته باشد، انتخاب موضوع، لحن، قالب و کانال انتشار بهتر انجام می‌شود.",
-          "پرسونا ابزاری برای خلاصه‌سازی شناخت مخاطب است. پرسونا یک شخصیت فرضی اما مبتنی بر داده است که نماینده گروهی از مخاطبان واقعی محسوب می‌شود. در پرسونا می‌توان اطلاعاتی مانند نام فرضی، شغل، هدف، مشکل اصلی، ترس‌ها، علاقه‌ها، کانال‌های مورد استفاده و معیار تصمیم‌گیری را ثبت کرد.",
-          "البته پرسونا نباید به کلیشه تبدیل شود. هدف آن ساده‌سازی فهم مخاطب است، نه محدود کردن نگاه. پرسونا باید با داده‌های واقعی، پرسش از مخاطبان، تحلیل رفتار کاربران، بررسی کامنت‌ها، تماس‌های مشتریان، جست‌وجوهای پرتکرار و تجربه تیم به‌روز شود."
-        ],
-        points:["مخاطب نامشخص باعث تولید محتوای عمومی و کم‌اثر می‌شود.","پرسونا شناخت مخاطب را قابل استفاده و عملی می‌کند.","شناخت مخاطب باید با داده و بازخورد واقعی اصلاح شود."],
-        practical:"برای ساخت پرسونا، می‌توان از فرم‌های نظرسنجی، مصاحبه کوتاه، بررسی جست‌وجوهای سایت، تحلیل شبکه‌های اجتماعی و مطالعه پرسش‌های پرتکرار مشتریان استفاده کرد.",
-        checklist:"یک پرسونای کاربردی باید هدف، مشکل، سطح دانش، کانال مورد علاقه و دلیل اعتماد یا بی‌اعتمادی مخاطب را مشخص کند.",
-        key:"شناخت مخاطب، کیفیت پیام و احتمال اثرگذاری محتوا را چند برابر می‌کند."
-      },
-      {
-        title:"پژوهش محتوا و اعتبار منابع",
-        tag:"Research",
-        seed:"research-sources",
-        quote:"محتوای معتبر از جست‌وجوی دقیق، مقایسه منابع و احترام به حقیقت شکل می‌گیرد.",
-        paragraphs:[
-          "پژوهش، پایه تولید محتوای عمیق و قابل اعتماد است. تولیدکننده محتوا باید پیش از نگارش یا ساخت هر قالبی، موضوع را از زاویه‌های مختلف بررسی کند، منابع معتبر را بخواند، داده‌ها را مقایسه کند و از برداشت‌های عجولانه پرهیز نماید. محتوای بدون پژوهش معمولاً سطحی، تکراری و گاهی گمراه‌کننده می‌شود.",
-          "منابع معتبر می‌توانند شامل کتاب‌ها، مقاله‌های علمی، گزارش‌های رسمی، وب‌سایت‌های تخصصی، آمارهای سازمانی، مصاحبه با کارشناسان و تجربه‌های مستند باشند. در فضای دیجیتال، سرعت انتشار بالا است اما سرعت نباید جای دقت را بگیرد. بررسی تاریخ انتشار، نویسنده، وابستگی سازمانی، شواهد ارائه‌شده و مقایسه با منابع دیگر اهمیت دارد.",
-          "اعتبار محتوا فقط به منابع وابسته نیست، بلکه به شیوه استفاده از آن‌ها نیز مربوط می‌شود. نقل مطالب باید دقیق، منصفانه و همراه با درک زمینه باشد. استفاده گزینشی از داده‌ها برای تأیید یک نظر از پیش تعیین‌شده، اعتبار محتوا را کاهش می‌دهد. پژوهش حرفه‌ای یعنی محتوا بر اساس شواهد شکل بگیرد، نه صرفاً بر اساس حدس یا سلیقه."
-        ],
-        points:["پژوهش، محتوا را از سطح تکرار به سطح تحلیل می‌رساند.","منبع معتبر باید از نظر نویسنده، تاریخ، شواهد و زمینه بررسی شود.","استفاده منصفانه از داده‌ها بخشی از اخلاق حرفه‌ای است."],
-        practical:"در پروژه‌های جدی، بهتر است برای هر محتوا یک فایل پژوهش ساخته شود که شامل لینک منابع، نکات کلیدی، آمارهای قابل استفاده و ایده‌های اصلی باشد.",
-        checklist:"قبل از انتشار، حداقل سه منبع مستقل بررسی شود و ادعاهای عددی یا تخصصی بدون منبع باقی نماند.",
-        key:"پژوهش قوی باعث می‌شود محتوا قابل اعتماد، ماندگار و قابل دفاع باشد."
-      },
-      {
-        title:"نگارش دیجیتال و روایت‌پردازی",
-        tag:"Writing",
-        seed:"digital-writing",
-        quote:"نوشتن برای فضای دیجیتال یعنی ترکیب وضوح، جذابیت، ساختار و احترام به زمان مخاطب.",
-        paragraphs:[
-          "نگارش دیجیتال با نگارش سنتی تفاوت‌هایی دارد. مخاطب آنلاین معمولاً با سرعت بیشتری محتوا را اسکن می‌کند، میان منابع مختلف جابه‌جا می‌شود و اگر در چند ثانیه اول ارزش محتوا را درک نکند، احتمال خروج او بالا می‌رود. بنابراین متن دیجیتال باید عنوان روشن، مقدمه جذاب، پاراگراف‌های منظم، تیترهای فرعی و مسیر خواندن روان داشته باشد.",
-          "روایت‌پردازی یکی از ابزارهای مهم در تولید محتواست. انسان‌ها اطلاعات را بهتر در قالب داستان، مثال، تجربه و مسئله واقعی به خاطر می‌سپارند. حتی در موضوعات تخصصی نیز می‌توان با طرح یک پرسش، بیان یک موقعیت، ارائه مثال کاربردی و سپس توضیح راه‌حل، ارتباط عمیق‌تری با مخاطب ایجاد کرد.",
-          "در نگارش حرفه‌ای، سادگی به معنای سطحی بودن نیست. متن خوب می‌تواند هم دقیق باشد و هم قابل فهم. استفاده از جمله‌های شفاف، پرهیز از اصطلاحات غیرضروری، توضیح مفاهیم پیچیده با مثال، رعایت لحن مناسب و ویرایش چندمرحله‌ای کیفیت متن را افزایش می‌دهد."
-        ],
-        points:["متن دیجیتال باید سریع ارزش خود را نشان دهد.","روایت و مثال، فهم و ماندگاری پیام را افزایش می‌دهند.","سادگی، وضوح و دقت سه اصل مهم نگارش حرفه‌ای هستند."],
-        practical:"برای نگارش یک مطلب، ابتدا اسکلت متن شامل عنوان، مقدمه، تیترهای فرعی، مثال‌ها و جمع‌بندی نوشته شود. سپس متن کامل تولید و در مرحله بعد ویرایش زبانی و محتوایی انجام گیرد.",
-        checklist:"عنوان جذاب، مقدمه روشن، پاراگراف کوتاه، تیترهای فرعی، مثال عملی و جمع‌بندی نهایی باید در متن بررسی شود.",
-        key:"نگارش دیجیتال موفق، محتوا را خواندنی، قابل فهم و قابل اقدام می‌کند."
-      },
-      {
-        title:"طراحی بصری و هویت گرافیکی",
-        tag:"Visual Design",
-        seed:"visual-design-content",
-        quote:"تصویر خوب فقط زیبا نیست؛ تصویر خوب پیام را سریع‌تر، واضح‌تر و ماندگارتر منتقل می‌کند.",
-        paragraphs:[
-          "طراحی بصری در تولید محتوا نقش بسیار مهمی دارد. مخاطب پیش از خواندن متن، با رنگ، تصویر، چینش، کادر، فونت و فضای کلی محتوا روبه‌رو می‌شود. اگر ظاهر محتوا نامنظم، شلوغ یا نامتناسب باشد، حتی متن ارزشمند نیز ممکن است جدی گرفته نشود. طراحی مناسب به محتوا اعتبار، جذابیت و خوانایی می‌دهد.",
-          "هویت گرافیکی شامل رنگ‌ها، فونت‌ها، الگوی تصاویر، سبک آیکون‌ها، نوع کادرها و شیوه صفحه‌آرایی است. وقتی این عناصر هماهنگ باشند، مخاطب به‌تدریج برند یا مجموعه را تشخیص می‌دهد و حس حرفه‌ای بودن شکل می‌گیرد. ثبات بصری باعث افزایش اعتماد و بهبود تجربه کاربری می‌شود.",
-          "در طراحی محتوا باید تعادل رعایت شود. استفاده زیاد از رنگ‌ها، افکت‌ها و عناصر تزئینی ممکن است تمرکز مخاطب را از پیام اصلی دور کند. طراحی حرفه‌ای معمولاً بر پایه سلسله‌مراتب بصری، فضای خالی کافی، تضاد مناسب، خوانایی فونت و هماهنگی رنگ‌ها شکل می‌گیرد."
-        ],
-        points:["طراحی بصری بر اولین برداشت مخاطب اثر مستقیم دارد.","هویت گرافیکی هماهنگ باعث تشخیص‌پذیری و اعتماد می‌شود.","زیبایی باید در خدمت پیام و خوانایی باشد."],
-        practical:"برای یک پروژه محتوایی، ساخت قالب ثابت برای پست‌ها، کاورها، اسلایدها و گزارش‌ها باعث صرفه‌جویی در زمان و حفظ یکپارچگی بصری می‌شود.",
-        checklist:"رنگ اصلی، رنگ مکمل، فونت، سبک تصویر، فاصله‌گذاری، اندازه تیتر و محل لوگو باید در راهنمای طراحی ثبت شود.",
-        key:"طراحی بصری، کیفیت  ارائه و دریافت پیام را به شکل محسوس بالا می‌برد."
-      },
-      {
-        title:"تصویر، ویدئو و رسانه‌های چندرسانه‌ای",
-        tag:"Multimedia",
-        seed:"multimedia-production",
-        quote:"مخاطب امروز فقط نمی‌خواند؛ می‌بیند، می‌شنود، لمس می‌کند، مقایسه می‌کند و در چند ثانیه تصمیم می‌گیرد.",
-        paragraphs:[
-          "محتوای چندرسانه‌ای یکی از مهم‌ترین دستاوردهای فناوری در حوزه ارتباطات است. ترکیب متن، تصویر، ویدئو، صدا، نمودار، انیمیشن و عناصر تعاملی باعث می‌شود پیام از مسیرهای مختلف ادراکی به مخاطب منتقل شود. وقتی یک موضوع پیچیده فقط با متن بیان شود، بخشی از مخاطبان ممکن است ارتباط عمیقی با آن برقرار نکنند؛ اما همان موضوع اگر با تصویرسازی، ویدئو، مثال صوتی یا اینفوگرافیک همراه شود، فهم آن سریع‌تر و ماندگارتر خواهد شد.",
-          "ویدئو به دلیل ترکیب تصویر، حرکت، صدا و روایت، یکی از اثرگذارترین قالب‌های محتوایی است. ویدئوهای آموزشی، معرفی محصول، پشت‌صحنه، مصاحبه، مستند کوتاه، گزارش رویداد و ویدئوهای کوتاه شبکه‌های اجتماعی هرکدام کارکرد متفاوتی دارند. در مقابل، تصویر ثابت نیز همچنان جایگاه مهمی دارد؛ زیرا سریع دیده می‌شود، قابلیت اشتراک‌گذاری بالایی دارد و در ساخت هویت بصری بسیار مؤثر است.",
-          "در تولید چندرسانه‌ای باید هدف مشخص باشد. استفاده از تصویر یا ویدئو فقط برای پر کردن صفحه کافی نیست. هر تصویر باید بخشی از پیام را کامل کند، حس مناسبی ایجاد نماید یا اطلاعاتی را ساده‌تر منتقل کند. انتخاب کیفیت تصویر، ترکیب‌بندی، نور، رنگ، متن روی تصویر، موسیقی، ریتم تدوین و حجم فایل، همه بر تجربه نهایی مخاطب اثر می‌گذارند."
-        ],
-        points:["محتوای چندرسانه‌ای فهم و ماندگاری پیام را افزایش می‌دهد.","ویدئو برای آموزش، معرفی و روایت بسیار اثرگذار است.","تصویر و صدا باید هدفمند و هماهنگ با پیام اصلی انتخاب شوند."],
-        practical:"در پروژه‌های عملی بهتر است برای هر محتوا یک نسخه چندرسانه‌ای نیز طراحی شود؛ مثلاً مقاله اصلی در سایت، خلاصه تصویری در شبکه اجتماعی، ویدئوی کوتاه برای معرفی و فایل صوتی برای مخاطبانی که فرصت مطالعه ندارند.",
-        checklist:"کیفیت تصویر، وضوح صدا، هماهنگی رنگ، حجم مناسب فایل، عنوان واضح، زیرنویس و نسخه قابل استفاده در موبایل باید قبل از انتشار بررسی شود.",
-        key:"رسانه چندرسانه‌ای، محتوا را از حالت خشک و یک‌بعدی به تجربه‌ای زنده و قابل لمس تبدیل می‌کند."
-      },
-      {
-        title:"سئو و دیده‌شدن محتوا در موتورهای جست‌وجو",
-        tag:"SEO",
-        seed:"seo-search-engine",
-        quote:"محتوایی که پیدا نشود، حتی اگر ارزشمند باشد، بخش بزرگی از اثرگذاری خود را از دست می‌دهد.",
-        paragraphs:[
-          "سئو یا بهینه‌سازی برای موتورهای جست‌وجو مجموعه‌ای از روش‌هاست که کمک می‌کند محتوا در نتایج جست‌وجو بهتر دیده شود. کاربران برای یافتن پاسخ پرسش‌ها، خرید کالا، یادگیری مهارت، حل مشکل و مقایسه گزینه‌ها به موتورهای جست‌وجو مراجعه می‌کنند. بنابراین اگر یک محتوا به‌درستی ساختاربندی و بهینه‌سازی نشده باشد، احتمال دیده‌شدن آن کاهش می‌یابد.",
-          "سئو فقط تکرار کلمات کلیدی نیست. در گذشته بعضی تصور می‌کردند با تکرار زیاد یک عبارت می‌توانند رتبه بهتری بگیرند، اما امروز کیفیت پاسخ، تجربه کاربری، ساختار صفحه، سرعت بارگذاری، اعتبار منبع، لینک‌سازی، خوانایی، تناسب عنوان با محتوا و رضایت کاربر اهمیت بیشتری دارد. موتورهای جست‌وجو تلاش می‌کنند بهترین پاسخ را برای نیاز واقعی کاربر نمایش دهند.",
-          "برای تولید محتوای سئو شده باید ابتدا نیت جست‌وجوی کاربر شناخته شود. کسی که عبارت آموزشی جست‌وجو می‌کند، با کسی که قصد خرید دارد نیاز متفاوتی دارد. پس عنوان، مقدمه، تیترها، توضیحات، تصاویر، لینک‌ها و دعوت به اقدام باید با هدف جست‌وجو هماهنگ باشد. محتوای سئو شده در نهایت باید هم برای کاربر مفید باشد و هم برای موتور جست‌وجو قابل فهم."
-        ],
-        points:["سئو باعث افزایش دیده‌شدن محتوای ارزشمند می‌شود.","کیفیت پاسخ و تجربه کاربری از تکرار کلمات مهم‌تر است.","شناخت نیت جست‌وجو پایه تولید محتوای سئو شده است."],
-        practical:"برای هر مطلب، پیش از نگارش باید فهرستی از کلمات کلیدی اصلی، پرسش‌های پرتکرار، تیترهای مناسب و لینک‌های داخلی تهیه شود. سپس متن به‌گونه‌ای نوشته شود که واقعاً پاسخ کامل و دقیق ارائه دهد.",
-        checklist:"عنوان صفحه، توضیح متا، تیترهای منظم، متن جایگزین تصویر، لینک داخلی، سرعت صفحه و خوانایی موبایل باید بررسی شود.",
-        key:"سئو زمانی حرفه‌ای است که دیده‌شدن را با ارزش واقعی برای مخاطب ترکیب کند."
-      },
-      {
-        title:"شبکه‌های اجتماعی و اقتصاد توجه",
-        tag:"Social Media",
-        seed:"social-media-attention",
-        quote:"در شبکه‌های اجتماعی، رقابت اصلی بر سر توجه مخاطب است؛ توجهی که کوتاه، پراکنده و بسیار ارزشمند شده است.",
-        paragraphs:[
-          "شبکه‌های اجتماعی شیوه تولید و مصرف محتوا را به‌طور بنیادین تغییر داده‌اند. در این فضا، محتوا با سرعت بالا منتشر می‌شود، بازخوردها فوری هستند و مخاطب می‌تواند در چند لحظه با پسندیدن، ذخیره کردن، ارسال کردن یا نوشتن دیدگاه واکنش نشان دهد. همین ویژگی باعث شده شبکه‌های اجتماعی به یکی از مهم‌ترین میدان‌های ارتباطی، آموزشی، تبلیغاتی و فرهنگی تبدیل شوند.",
-          "اقتصاد توجه به این معناست که زمان و تمرکز مخاطب به یک منبع کمیاب تبدیل شده است. هر کاربر در طول روز با حجم زیادی از پیام‌ها، ویدئوها، خبرها و تبلیغات روبه‌رو می‌شود. بنابراین محتوا باید در همان لحظات نخست دلیل کافی برای ادامه دیدن یا خواندن ارائه کند. تصویر ابتدایی، تیتر، شروع ویدئو، ریتم روایت و ارزش کاربردی محتوا نقش تعیین‌کننده دارند.",
-          "با این حال، موفقیت در شبکه‌های اجتماعی فقط به جذابیت لحظه‌ای وابسته نیست. استمرار، هویت مشخص، صداقت، تعامل واقعی، پاسخ‌گویی، تحلیل داده‌ها و درک فرهنگ هر پلتفرم اهمیت دارد. محتوایی که فقط برای جلب توجه کوتاه‌مدت ساخته شود، ممکن است بازدید بگیرد اما اعتماد پایدار ایجاد نکند."
-        ],
-        points:["شبکه‌های اجتماعی ارتباط سریع و دوطرفه ایجاد می‌کنند.","توجه مخاطب منبعی کمیاب و ارزشمند است.","اعتماد بلندمدت مهم‌تر از دیده‌شدن مقطعی است."],
-        practical:"برای مدیریت شبکه اجتماعی باید تقویم انتشار، قالب‌های ثابت، سناریوی پاسخ‌گویی، بانک ایده، برنامه تحلیل هفتگی و دستورالعمل لحن تهیه شود.",
-        checklist:"شروع جذاب، تصویر کاور مناسب، کپشن خوانا، دعوت به تعامل، هشتگ محدود و مرتبط، زمان انتشار و پاسخ به کامنت‌ها بررسی شود.",
-        key:"شبکه اجتماعی موفق، ترکیبی از خلاقیت، نظم، تعامل و تحلیل مستمر است."
-      },
-      {
-        title:"هوش مصنوعی و ابزارهای هوشمند در تولید محتوا",
-        tag:"AI Tools",
-        seed:"ai-content-tools",
-        quote:"ابزارهای هوشمند می‌توانند سرعت تولید را افزایش دهند، اما ارزش نهایی محتوا به تشخیص، ویرایش و مسئولیت انسانی وابسته است.",
-        paragraphs:[
-          "هوش مصنوعی در سال‌های اخیر وارد بسیاری از مراحل تولید محتوا شده است. ابزارهای هوشمند می‌توانند در ایده‌پردازی، خلاصه‌سازی، پیشنهاد عنوان، ویرایش متن، تبدیل گفتار به نوشتار، تولید تصویر، ترجمه، دسته‌بندی داده‌ها، تحلیل رفتار مخاطب و حتی ساخت ویدئو کمک کنند. این امکانات باعث شده بخشی از کارهای زمان‌بر سریع‌تر انجام شود.",
-          "اما استفاده حرفه‌ای از ابزارهای هوشمند نیازمند دقت است. خروجی این ابزارها باید بررسی، اصلاح، منبع‌سنجی و با نیاز واقعی پروژه هماهنگ شود. اگر تولیدکننده محتوا فقط به خروجی خام ابزار تکیه کند، ممکن است متن کلیشه‌ای، نادرست، فاقد هویت یا بدون عمق تولید شود. ابزار هوشمند باید همکار باشد، نه جایگزین اندیشه و مسئولیت.",
-          "در آینده، مهارت مهم تولیدکنندگان محتوا فقط کار با ابزار نخواهد بود، بلکه توانایی طرح پرسش درست، ارزیابی خروجی، ترکیب داده‌ها، حفظ لحن انسانی، رعایت اخلاق و تشخیص اصالت اهمیت بیشتری پیدا می‌کند. کسانی موفق‌تر خواهند بود که بتوانند از فناوری برای افزایش کیفیت استفاده کنند، نه برای کاهش دقت."
-        ],
-        points:["ابزارهای هوشمند در ایده‌پردازی، ویرایش و تحلیل کمک‌کننده‌اند.","خروجی ابزار باید حتماً بازبینی و اعتبارسنجی شود.","مهارت انسانی در تشخیص، روایت و اخلاق همچنان ضروری است."],
-        practical:"در یک روند کاری حرفه‌ای می‌توان از ابزار هوشمند برای تهیه پیش‌نویس، فهرست ایده‌ها و تحلیل اولیه استفاده کرد؛ سپس متخصص محتوا متن را بازنویسی، مستندسازی و متناسب با لحن پروژه نهایی می‌کند.",
-        checklist:"بررسی صحت اطلاعات، حذف کلیشه‌ها، افزودن تجربه انسانی، اصلاح لحن، منبع‌دهی و تطبیق با هدف پروژه الزامی است.",
-        key:"فناوری هوشمند زمانی ارزشمند است که کیفیت انسانی محتوا را تقویت کند."
+          "تولید محتوا در جهان امروز دیگر محدود به نوشتن یک متن ساده یا آماده‌سازی یک پوستر تبلیغاتی نیست. هر پیام برای دیده‌شدن، فهمیده‌شدن و ماندگارشدن باید در محیطی رقابتی، سریع، چندرسانه‌ای و داده‌محور طراحی شود. تکنولوژی این محیط را ساخته و هم‌زمان قواعد حضور در آن را تغییر داده است.",
+          "در گذشته، رسانه‌ها بیشتر یک‌طرفه بودند و مخاطب نقش دریافت‌کننده داشت؛ اما امروز مخاطب می‌تواند واکنش نشان دهد، محتوا  متن، زمان‌بندی انتشار، ساخت زیرنویس، پاک‌سازی نگارش، تحلیل پرسونا، استخراج گزارش عملکرد و بازنویسی ساختاری از مهم‌ترین ابزارهای مکمل هستند."
       },
       {
         title:"تحلیل عملکرد و شاخص‌های سنجش محتوا",
         tag:"Analytics",
-        seed:"analytics-dashboard",
-        quote:"آنچه سنجیده نشود، به‌درستی مدیریت و اصلاح نخواهد شد.",
-        paragraphs:[
-          "تحلیل عملکرد محتوا کمک می‌کند بدانیم کدام موضوع، قالب، عنوان، کانال و زمان انتشار نتیجه بهتری داشته است. شاخص‌هایی مانند تعداد بازدید، نرخ کلیک، نرخ تبدیل، مدت‌زمان حضور کاربر، نرخ خروج، میزان اشتراک‌گذاری، تعداد دیدگاه‌ها، نرخ تکمیل ویدئو و میزان بازگشت مخاطب، اطلاعات ارزشمندی درباره کیفیت ارتباط محتوا با مخاطب ارائه می‌دهند.",
-          "نکته مهم این است که هیچ شاخصی به‌تنهایی تصویر کامل ارائه نمی‌کند. ممکن است محتوایی بازدید زیادی داشته باشد اما اعتماد یا فروش ایجاد نکند. از سوی دیگر، محتوایی تخصصی با بازدید کمتر می‌تواند مخاطبان دقیق‌تر و ارزشمندتری جذب کند. بنابراین تحلیل محتوا باید بر اساس هدف هر پروژه انجام شود؛ هدف ممکن است آگاهی‌بخشی، فروش، آموزش، جذب مخاطب، افزایش وفاداری یا تغییر نگرش باشد.",
-          "تحلیل داده زمانی مفید است که به اقدام منجر شود. اگر گزارش‌ها فقط ذخیره شوند و تغییری در برنامه ایجاد نکنند، ارزش عملی ندارند. تیم حرفه‌ای پس از بررسی داده‌ها تصمیم می‌گیرد چه موضوعاتی توسعه یابد، چه قالبی اصلاح شود، چه زمان انتشاری بهتر است و کدام محتوا نیاز به بازنویسی یا به‌روزرسانی دارد."
-        ],
-        points:["شاخص‌ها باید با هدف محتوا هماهنگ باشند.","تحلیل داده مسیر اصلاح و بهینه‌سازی را مشخص می‌کند.","گزارش‌گیری منظم باعث تصمیم‌گیری حرفه‌ای‌تر می‌شود."],
-        practical:"برای هر کانال انتشار باید داشبورد ساده‌ای ساخته شود که شاخص‌های اصلی را در بازه هفتگی یا ماهانه نشان دهد و در کنار آن پیشنهاد اصلاحی نوشته شود.",
-        checklist:"بازدید، تعامل، نرخ کلیک، نرخ تبدیل، زمان حضور، منابع ورودی، محتوای پربازده و محتوای کم‌اثر باید بررسی شود.",
-        key:"تحلیل محتوا پلی میان تولید خلاقانه و تصمیم‌گیری دقیق است."
+        seed:"analytics-dashboard-dark",
+        quote:"محتوایی که سنجیده نشود، در حد حدس و سلیقه باقی می‌ماند.",
+        body:"تحلیل عملکرد محتوا یعنی بررسی دقیق اینکه هر محتوا چه نتیجه‌ای ایجاد کرده است. تعداد بازدید، مدت‌زمان حضور، نرخ کلیک، نرخ تبدیل، میزان ذخیره‌سازی، تعداد بازنشر، کیفیت دیدگاه‌ها و مسیر ورود مخاطب، هرکدام بخشی از واقعیت را نشان می‌دهند.",
+        analysis:"تحلیل حرفه‌ای فقط جمع‌آوری عدد نیست. ممکن است یک محتوا بازدید زیادی بگیرد اما اعتماد ایجاد نکند؛ یا محتوایی تخصصی بازدید کمتری داشته باشد اما مخاطب دقیق‌تر و ارزشمندتری جذب کند. بنابراین هر شاخص باید بر اساس هدف محتوا تفسیر شود.",
+        practical:"برای هر پروژه باید داشبورد ساده‌ای طراحی شود که در بازه هفتگی یا ماهانه وضعیت محتوا را نشان دهد. این داشبورد می‌تواند شامل بهترین عنوان‌ها، پربازدیدترین قالب‌ها، موضوعات کم‌اثر و پیشنهادهای اصلاحی باشد.",
+        check:"هماهنگی شاخص‌ها با هدف، بررسی منابع ورودی، مقایسه قالب‌ها، تحلیل نرخ خروج، بررسی تعامل واقعی و ثبت تصمیم‌های اصلاحی باید انجام شود.",
+        case:"اگر مقاله‌ای بازدید بالا اما زمان حضور پایین دارد، احتمالاً عنوان جذاب است ولی متن پاسخ کافی نمی‌دهد. در این حالت باید مقدمه، ساختار تیترها و کیفیت پاسخ اصلاح شود.",
+        tools:"Google Analytics، Search Console، ابزارهای تحلیل شبکه اجتماعی، داشبوردهای مدیریتی و فرم‌های بازخورد مخاطب برای تحلیل عملکرد استفاده می‌شوند."
       },
       {
-        title:"بازاریابی محتوایی و قیف جذب مخاطب",
+        title:"بازاریابی محتوایی و ساخت اعتماد",
         tag:"Marketing",
-        seed:"content-marketing-funnel",
-        quote:"بازاریابی محتوایی به‌جای فشار مستقیم برای فروش، با آموزش، اعتماد و ارزش‌آفرینی مخاطب را همراه می‌کند.",
-        paragraphs:[
-          "بازاریابی محتوایی رویکردی است که در آن سازمان یا برند با تولید محتوای ارزشمند، مخاطب را از مرحله آشنایی تا تصمیم‌گیری و وفاداری همراه می‌سازد. در این روش، محتوا فقط برای تبلیغ مستقیم تولید نمی‌شود؛ بلکه باید به پرسش‌های مخاطب پاسخ دهد، مسئله‌ای از او حل کند، تجربه‌ای مفید بسازد و در نهایت زمینه انتخاب آگاهانه را فراهم نماید.",
-          "قیف محتوایی معمولاً شامل چند مرحله است: آگاهی، علاقه، بررسی، تصمیم، اقدام و وفاداری. در مرحله آگاهی، محتوای آموزشی و عمومی برای جذب مخاطب مناسب است. در مرحله بررسی، مقایسه، راهنما، نمونه موردی و تحلیل تخصصی اهمیت دارد. در مرحله تصمیم، اعتمادسازی، تجربه مشتریان، ضمانت، پاسخ به نگرانی‌ها و دعوت به اقدام نقش اصلی را ایفا می‌کند.",
-          "بازاریابی محتوایی موفق نیازمند صبر و استمرار است. برخلاف تبلیغات کوتاه‌مدت که ممکن است اثر فوری داشته باشد، محتوا به‌تدریج اعتبار می‌سازد. اگر این فرایند با شناخت مخاطب، برنامه‌ریزی، کیفیت و تحلیل همراه باشد، می‌تواند هزینه جذب مخاطب را کاهش دهد و ارتباط پایدار ایجاد کند."
-        ],
-        points:["محتوا باید متناسب با مرحله ذهنی مخاطب طراحی شود.","فروش پایدار از اعتماد و ارزش‌آفرینی شکل می‌گیرد.","مخاطب پس از اقدام نیز به آموزش و ارتباط نیاز دارد."],
-        practical:"برای یک محصول یا خدمت، باید برای هر مرحله قیف حداقل چند محتوای مشخص طراحی شود؛ مانند مقاله آموزشی، ویدئوی معرفی، مقایسه گزینه‌ها، پرسش‌های متداول و پیام‌های پس از خرید.",
-        checklist:"هدف مرحله، پرسش مخاطب، نگرانی اصلی، قالب محتوا، دعوت به اقدام و شاخص موفقیت باید مشخص شود.",
-        key:"بازاریابی محتوایی، فروش را به نتیجه طبیعی اعتماد و آموزش تبدیل می‌کند."
+        seed:"content-marketing-dark",
+        quote:"بازاریابی محتوایی فروش را با فشار شروع نمی‌کند؛ با اعتماد، آموزش و ارزش‌آفرینی آغاز می‌شود.",
+        body:"بازاریابی محتوایی رویکردی است که در آن سازمان یا فرد با تولید محتوای مفید، مخاطب را از مرحله آشنایی تا اعتماد، تصمیم‌گیری و وفاداری همراه می‌کند. در این روش، محتوا فقط ابزار تبلیغ نیست، بلکه بخشی از تجربه مخاطب با برند است.",
+        analysis:"مخاطب معمولاً در اولین برخورد تصمیم نهایی نمی‌گیرد. او ابتدا مسئله خود را می‌شناسد، سپس راه‌حل‌ها را مقایسه می‌کند، بعد به اعتبار ارائه‌دهنده توجه می‌کند و در نهایت تصمیم می‌گیرد. اگر محتوا در هر مرحله پاسخ مناسب نداشته باشد، مسیر اعتماد ناقص می‌ماند.",
+        practical:"برای قیف محتوایی باید محتوای آگاهی‌بخش، مقایسه‌ای، آموزشی، نمونه‌موردی، پرسش‌های متداول، تجربه مشتری و دعوت به اقدام طراحی شود. هر محتوا باید جای مشخصی در مسیر تصمیم مخاطب داشته باشد.",
+        check:"مرحله ذهنی مخاطب، پیام اصلی، دعوت به اقدام، شواهد اعتماد، نمونه واقعی و هماهنگی با هویت برند باید بررسی شود.",
+        case:"یک آموزشگاه می‌تواند ابتدا محتوای رایگان آموزشی منتشر کند، سپس نمونه پروژه هنرجویان را نشان دهد و در نهایت با مشاوره یا ثبت‌نام، مخاطب آماده را جذب کند.",
+        tools:"تقویم محتوایی، صفحه فرود، خبرنامه، مقاله آموزشی، ویدئوی مقایسه‌ای، فایل راهنما و سیستم مدیریت ارتباط با مشتری در این حوزه کاربرد دارند."
       },
       {
-        title:"کاربردهای عملی تکنولوژی و تولید محتوا در آموزش",
-        tag:"Education",
-        seed:"education-technology-content",
-        quote:"آموزش دیجیتال زمانی موفق است که محتوا را از انتقال خشک اطلاعات به تجربه یادگیری فعال تبدیل کند.",
-        paragraphs:[
-          "یکی از مهم‌ترین کاربردهای عملی تکنولوژی و تولید محتوا در آموزش است. دانشگاه‌ها، مدارس، آموزشگاه‌ها، مدرسان مستقل و سازمان‌ها می‌توانند با استفاده از محتوای دیجیتال، یادگیری را از محدودیت زمان و مکان خارج کنند. فیلم آموزشی، آزمون آنلاین، کلاس مجازی، فایل تعاملی، پادکست آموزشی، اینفوگرافیک، شبیه‌ساز و سامانه مدیریت یادگیری نمونه‌هایی از این کاربرد هستند.",
-          "محتوای آموزشی باید بر اساس طراحی آموزشی تولید شود. یعنی ابتدا هدف یادگیری مشخص گردد، سپس محتوای اصلی به بخش‌های کوچک‌تر تقسیم شود، برای هر بخش مثال و تمرین طراحی گردد و در پایان امکان ارزیابی و بازخورد فراهم شود. آموزش مؤثر فقط انتقال مطلب نیست؛ بلکه باید یادگیرنده را درگیر، فعال و قادر به استفاده عملی از آموخته‌ها کند.",
-          "تکنولوژی در آموزش امکان شخصی‌سازی نیز ایجاد می‌کند. دانشجویان می‌توانند با سرعت خود یاد بگیرند، چند بار یک ویدئو را ببینند، آزمون بدهند، بازخورد بگیرند و مسیر یادگیری مناسب خود را دنبال کنند. این ویژگی به‌ویژه برای آموزش مهارت‌های کاربردی، دوره‌های ضمن خدمت و یادگیری مادام‌العمر اهمیت فراوان دارد."
-        ],
-        points:["محتوای آموزشی دیجیتال محدودیت زمان و مکان را کاهش می‌دهد.","طراحی آموزشی، کیفیت یادگیری را افزایش می‌دهد.","فناوری امکان تمرین، بازخورد و شخصی‌سازی را فراهم می‌کند."],
-        practical:"برای ساخت یک درس دیجیتال، باید هدف، پیش‌نیاز، متن درس، ویدئوی کوتاه، تمرین، آزمون، خلاصه و منبع تکمیلی طراحی شود. هر بخش باید کوتاه، واضح و قابل پیگیری باشد.",
-        checklist:"هدف یادگیری، مثال واقعی، تمرین، آزمون، بازخورد، فایل تکمیلی و امکان دسترسی با موبایل بررسی شود.",
-        key:"در آموزش، محتوا باید مخاطب را از دانستن به توانستن برساند."
+        title:"کاربردهای عملی تکنولوژی در تولید محتوا",
+        tag:"Practical Use",
+        seed:"practical-digital-workflow",
+        quote:"ارزش تکنولوژی زمانی روشن می‌شود که به حل مسئله واقعی در کار، آموزش، رسانه و کسب‌وکار کمک کند.",
+        body:"تکنولوژی در تولید محتوا کاربردهای متنوعی دارد؛ از برنامه‌ریزی و پژوهش گرفته تا ضبط، طراحی، تدوین، انتشار، تبلیغ، تحلیل و بهینه‌سازی. امروزه یک تیم کوچک می‌تواند با ابزارهای دیجیتال کاری انجام دهد که پیش‌تر نیازمند تجهیزات گران و گروه‌های بزرگ بود.",
+        analysis:"کاربرد عملی تکنولوژی فقط استفاده از نرم‌افزارهای متعدد نیست. مسئله اصلی این است که ابزارها در یک فرایند منظم قرار بگیرند. اگر پژوهش، تولید، بازبینی، انتشار و تحلیل از هم جدا باشند، حتی بهترین ابزارها نیز نتیجه مطلوب نمی‌دهند.",
+        practical:"در یک پروژه واقعی، ابتدا موضوع و مخاطب مشخص می‌شود، سپس تحقیق کلمات کلیدی و نیاز مخاطب انجام می‌گیرد، بعد متن و تصویر تولید می‌شود، نسخه شبکه اجتماعی و سایت آماده می‌گردد، انتشار زمان‌بندی می‌شود و در پایان عملکرد بررسی می‌شود.",
+        check:"هدف پروژه، ابزار مناسب، مسئول هر مرحله، زمان‌بندی، کیفیت خروجی، نسخه موبایل، مسیر انتشار و شاخص سنجش باید پیش از شروع مشخص شود.",
+        case:"برای معرفی یک محصول محلی می‌توان عکس حرفه‌ای، ویدئوی کوتاه، مقاله آموزشی، پست شبکه اجتماعی، نظر مشتریان و صفحه سفارش را به شکل یک کمپین کوچک هماهنگ کرد.",
+        tools:"ابزارهای مدیریت پروژه، ویرایش تصویر، تدوین ویدئو، تولید زیرنویس، زمان‌بندی انتشار، تحلیل داده و ذخیره‌سازی ابری در اجرای عملی نقش اساسی دارند."
       },
       {
-        title:"کاربردهای عملی در کسب‌وکار و فروش",
-        tag:"Business",
-        seed:"business-content-practical",
-        quote:"کسب‌وکارها با محتوای درست می‌توانند پیش از فروش، اعتماد بسازند و پس از فروش، وفاداری ایجاد کنند.",
-        paragraphs:[
-          "در کسب‌وکار، محتوا فقط ابزار تبلیغ نیست؛ بلکه بخشی از تجربه مشتری است. مشتری پیش از خرید معمولاً جست‌وجو می‌کند، مقایسه می‌کند، نظر دیگران را می‌خواند، تصاویر محصول را می‌بیند و به دنبال پاسخ نگرانی‌های خود می‌گردد. اگر کسب‌وکار بتواند در این مراحل محتوای مفید ارائه کند، احتمال اعتماد و انتخاب افزایش می‌یابد.",
-          "کاربردهای عملی محتوا در کسب‌وکار بسیار گسترده است. معرفی محصول، راهنمای خرید، ویدئوی استفاده، پاسخ به پرسش‌های متداول، مقایسه محصولات، داستان برند، تجربه مشتریان، آموزش نگهداری، محتوای پشت‌صحنه، ایمیل اطلاع‌رسانی و مقاله تخصصی همگی می‌توانند مسیر فروش را تقویت کنند. محتوا همچنین می‌تواند بار پاسخ‌گویی تکراری را کاهش دهد و مشتری را آگاه‌تر کند.",
-          "برای کسب‌وکارهای کوچک، محتوا فرصتی برای رقابت با مجموعه‌های بزرگ‌تر است. یک کسب‌وکار محلی اگر بتواند صادقانه، منظم و کاربردی محتوا منتشر کند، می‌تواند اعتماد جامعه هدف خود را به دست آورد. در این مسیر لازم نیست همه محتواها پرهزینه باشند؛ کیفیت پیام، استمرار، تصویر مناسب و پاسخ‌گویی محترمانه اهمیت بیشتری دارد."
-        ],
-        points:["محتوا بخش مهمی از تجربه مشتری است.","راهنماها و پاسخ‌های دقیق، مسیر خرید را ساده‌تر می‌کنند.","کسب‌وکار کوچک با محتوای صادقانه می‌تواند اعتماد بزرگ بسازد."],
-        practical:"برای فروشگاه یا خدمات، باید صفحه محصول کامل، بخش پرسش‌های متداول، ویدئوی معرفی، محتوای آموزشی قبل از خرید و پیام‌های پشتیبانی پس از خرید آماده شود.",
-        checklist:"نیاز مشتری، نگرانی خرید، مزیت محصول، روش استفاده، ضمانت، تجربه مشتری و دعوت به اقدام باید در محتوا دیده شود.",
-        key:"محتوای کسب‌وکار زمانی موفق است که به تصمیم‌گیری مطمئن مشتری کمک کند."
+        title:"آموزش آنلاین و محتوای یادگیری دیجیتال",
+        tag:"E-Learning",
+        seed:"online-learning-dark",
+        quote:"محتوای آموزشی خوب، پیچیدگی را به مسیر یادگیری قابل فهم تبدیل می‌کند.",
+        body:"آموزش آنلاین با کمک ویدئو، آزمون، فایل تعاملی، کلاس مجازی، پادکست آموزشی و سامانه‌های مدیریت یادگیری گسترش یافته است. این نوع آموزش محدودیت زمان و مکان را کاهش می‌دهد و امکان یادگیری مرحله‌به‌مرحله را فراهم می‌کند.",
+        analysis:"در آموزش دیجیتال، انتقال اطلاعات کافی نیست. یادگیرنده باید مسیر روشن، مثال، تمرین، بازخورد و ارزیابی داشته باشد. اگر محتوا فقط طولانی باشد اما ساختار آموزشی نداشته باشد، خستگی و افت یادگیری ایجاد می‌کند.",
+        practical:"برای طراحی یک درس دیجیتال باید هدف یادگیری، پیش‌نیاز، بخش‌بندی درس، مثال کاربردی، تمرین کوتاه، آزمون پایانی و منابع تکمیلی مشخص شود. بهتر است هر بخش آموزشی کوتاه و متمرکز باشد.",
+        check:"هدف درس، سطح مخاطب، کیفیت صدا و تصویر، ترتیب مفاهیم، تمرین، آزمون، زیرنویس، فایل کمکی و امکان بازخورد باید کنترل شود.",
+        case:"در آموزش تولید محتوا، می‌توان یک درس را به شناخت مخاطب، ایده‌پردازی، تیترنویسی، نگارش، طراحی تصویر، انتشار و تحلیل نتیجه تقسیم کرد.",
+        tools:"سامانه‌های LMS، ابزار ضبط صفحه، نرم‌افزار تدوین، فرم آزمون، تخته دیجیتال، ابزار وبینار و بانک فایل آموزشی کاربرد دارند."
       },
       {
-        title:"کاربردهای عملی در رسانه، فرهنگ و اطلاع‌رسانی",
-        tag:"Media",
-        seed:"media-culture-information",
-        quote:"در عصر سرعت، مسئولیت رسانه‌ای یعنی انتشار دقیق‌تر، نه فقط سریع‌تر.",
-        paragraphs:[
-          "رسانه‌ها و نهادهای فرهنگی از مهم‌ترین استفاده‌کنندگان محتوا هستند. اطلاع‌رسانی عمومی، معرفی رویدادها، آموزش شهروندی، ترویج فرهنگ مطالعه، آگاهی‌بخشی درباره سلامت، حفاظت از محیط زیست، معرفی میراث فرهنگی و پوشش اخبار محلی نمونه‌هایی از کاربردهای عملی محتوا در این حوزه‌اند.",
-          "تکنولوژی باعث شده رسانه‌ها بتوانند با مخاطبان گسترده‌تر و متنوع‌تر ارتباط برقرار کنند. یک رویداد فرهنگی می‌تواند با پوستر دیجیتال، گزارش تصویری، ویدئوی کوتاه، مصاحبه، پادکست، صفحه وب و خبرنامه معرفی شود. این تنوع قالب کمک می‌کند پیام برای گروه‌های مختلف قابل فهم و جذاب باشد.",
-          "با این حال، حوزه رسانه و فرهنگ نیازمند دقت اخلاقی بالاست. انتشار خبر یا محتوای عمومی می‌تواند بر نگرش جامعه اثر بگذارد. بنابراین صحت منبع، پرهیز از تیتر گمراه‌کننده، احترام به حریم خصوصی، توجه به تنوع فرهنگی و پرهیز از بزرگ‌نمایی غیرواقعی اهمیت دارد. محتوای فرهنگی موفق هم آگاهی می‌دهد و هم اعتماد عمومی را حفظ می‌کند."
-        ],
-        points:["محتوا در فرهنگ و رسانه نقش آگاهی‌بخش و هویت‌ساز دارد.","قالب‌های متنوع پیام فرهنگی را فراگیرتر می‌کنند.","دقت، منبع معتبر و اخلاق حرفه‌ای در اطلاع‌رسانی ضروری است."],
-        practical:"برای معرفی یک رویداد فرهنگی، می‌توان بسته محتوایی شامل پوستر، متن خبر، ویدئوی کوتاه، مصاحبه، گزارش تصویری و خلاصه پس از رویداد تولید کرد.",
-        checklist:"منبع خبر، زمان، مکان، مخاطب، هدف فرهنگی، تصویر مجاز، لحن محترمانه و اطلاعات تماس بررسی شود.",
-        key:"محتوای فرهنگی باید هم زیبا باشد و هم مسئولانه."
+        title:"رسانه، خبر و مسئولیت اجتماعی محتوا",
+        tag:"Media Ethics",
+        seed:"digital-newsroom-dark",
+        quote:"در فضای سریع خبر، مسئولیت حرفه‌ای یعنی دقیق بودن پیش از زودتر بودن.",
+        body:"فناوری سرعت انتشار خبر و اطلاعات را چند برابر کرده است. کاربران می‌توانند در چند ثانیه متن، تصویر یا ویدئویی را منتشر کنند و بر افکار دیگران اثر بگذارند. این ویژگی در کنار فرصت اطلاع‌رسانی، خطر شایعه و برداشت نادرست را نیز افزایش می‌دهد.",
+        analysis:"در محتوای خبری، تیتر جذاب اگر گمراه‌کننده باشد اعتماد را نابود می‌کند. همچنین انتشار تصویر یا نقل‌قول بدون زمینه می‌تواند ذهن مخاطب را به سمت برداشت غلط ببرد. رسانه حرفه‌ای باید میان سرعت، دقت، انصاف و احترام به مخاطب تعادل ایجاد کند.",
+        practical:"پیش از انتشار خبر باید منبع، تاریخ، محل، زمینه، نقل‌قول‌ها و تصویرها بررسی شوند. اگر خبر حساس است، بهتر است از چند منبع معتبر تأیید گرفته شود و از زبان هیجانی یا قطعی بدون سند پرهیز گردد.",
+        check:"اعتبار منبع، زمان انتشار، صحت تصویر، نبود تیتر فریبنده، رعایت حریم افراد، ذکر زمینه و امکان اصلاح خطا باید بررسی شود.",
+        case:"اگر تصویری از یک رویداد منتشر شود، بدون بررسی زمان و مکان تصویر ممکن است به رویدادی دیگر نسبت داده شود و باعث انتشار اطلاعات غلط گردد.",
+        tools:"ابزار جست‌وجوی معکوس تصویر، آرشیو خبرگزاری‌ها، سامانه‌های راستی‌آزمایی، بانک داده عمومی و گفت‌وگو با منبع رسمی کاربرد دارند."
       },
       {
-        title:"محتوای تعاملی و تجربه کاربر",
-        tag:"Interactive UX",
-        seed:"interactive-user-experience",
-        quote:"مخاطب امروز فقط مصرف‌کننده نیست؛ او می‌خواهد انتخاب کند، پاسخ دهد، مشارکت کند و دیده شود.",
-        paragraphs:[
-          "محتوای تعاملی به قالب‌هایی گفته می‌شود که مخاطب در آن‌ها نقش فعال دارد. آزمون، نظرسنجی، فرم، بازی آموزشی، نقشه تعاملی، محاسبه‌گر، پرسش و پاسخ زنده، مسابقه و تجربه‌های چندمرحله‌ای از نمونه‌های این نوع محتوا هستند. تعامل باعث می‌شود مخاطب زمان بیشتری با محتوا بگذراند و احساس کند بخشی از فرایند است.",
-          "تجربه کاربر در محتوای تعاملی اهمیت زیادی دارد. اگر فرم‌ها طولانی، دکمه‌ها نامشخص، مسیر استفاده پیچیده یا نتیجه تعامل بی‌ارزش باشد، مخاطب ادامه نمی‌دهد. محتوای تعاملی باید ساده، سریع، زیبا و هدفمند باشد. هر کلیک باید دلیل داشته باشد و نتیجه‌ای برای کاربر ایجاد کند.",
-          "از نظر کاربردی، محتوای تعاملی می‌تواند به شناخت مخاطب کمک کند. برای مثال یک آزمون سطح دانش می‌تواند محتوای مناسب بعدی را پیشنهاد دهد. یک محاسبه‌گر می‌تواند هزینه تقریبی یک خدمت را نشان دهد. یک نظرسنجی می‌تواند دیدگاه مخاطبان را برای تصمیم‌گیری‌های بعدی آشکار کند."
-        ],
-        points:["تعامل باعث افزایش توجه و درگیری ذهنی مخاطب می‌شود.","تجربه کاربری ساده و روشن شرط موفقیت محتوای تعاملی است.","تعامل می‌تواند داده‌های مفیدی درباره نیاز مخاطب ایجاد کند."],
-        practical:"در وب‌سایت آموزشی می‌توان آزمون کوتاه طراحی کرد تا پس از پاسخ کاربر، مسیر یادگیری مناسب او پیشنهاد شود. در کسب‌وکار نیز فرم نیازسنجی می‌تواند مسیر مشاوره را دقیق‌تر کند.",
-        checklist:"هدف تعامل، تعداد مراحل، وضوح دکمه‌ها، ارزش خروجی، سرعت اجرا، سازگاری موبایل و حفظ داده‌های کاربر بررسی شود.",
-        key:"محتوای تعاملی، مخاطب را از تماشاگر به مشارکت‌کننده تبدیل می‌کند."
+        title:"محتوای تعاملی و مشارکت مخاطب",
+        tag:"Interactive",
+        seed:"interactive-content-dark",
+        quote:"وقتی مخاطب فقط تماشاگر نباشد، ارتباط عمیق‌تر و ماندگارتر می‌شود.",
+        body:"محتوای تعاملی شامل نظرسنجی، آزمون، فرم، مسابقه، نقشه تعاملی، محاسبه‌گر، پرسش و پاسخ زنده و تجربه‌های چندمرحله‌ای است. این قالب‌ها مخاطب را از حالت دریافت‌کننده منفعل خارج می‌کنند و او را وارد فرایند محتوا می‌سازند.",
+        analysis:"تعامل زمانی ارزشمند است که هدفمند باشد. اگر نظرسنجی فقط برای سرگرمی سطحی باشد، اثر آن کوتاه‌مدت است؛ اما اگر به شناخت نیاز مخاطب، آموزش بهتر یا پیشنهاد دقیق‌تر کمک کند، ارزش محتوایی بالایی پیدا می‌کند.",
+        practical:"در یک سایت آموزشی می‌توان آزمون تعیین سطح طراحی کرد تا کاربر پس از پاسخ به چند پرسش، مسیر یادگیری مناسب خود را دریافت کند. این کار هم تجربه کاربر را بهتر می‌کند و هم داده مفید برای تولیدکننده فراهم می‌سازد.",
+        check:"هدف تعامل، سادگی فرم، حفظ حریم اطلاعات، نتیجه قابل فهم، طراحی موبایل، سرعت بارگذاری و کاربرد داده‌های جمع‌آوری‌شده باید بررسی شود.",
+        case:"یک فروشگاه آنلاین می‌تواند با چند سؤال ساده درباره نیاز مشتری، محصول مناسب‌تر را پیشنهاد دهد و احتمال خرید آگاهانه را افزایش دهد.",
+        tools:"فرم‌سازها، ابزار آزمون آنلاین، افزونه‌های نظرسنجی، چت زنده، نقشه تعاملی و ابزارهای ساخت محاسبه‌گر کاربرد دارند."
       },
       {
-        title:"مدیریت پروژه و تیم تولید محتوا",
-        tag:"Management",
-        seed:"content-team-management",
-        quote:"محتوای حرفه‌ای نتیجه کار تصادفی نیست؛ حاصل برنامه‌ریزی، تقسیم وظیفه، زمان‌بندی و کنترل کیفیت است.",
-        paragraphs:[
-          "تولید محتوای جدی معمولاً یک کار تیمی است. ایده‌پرداز، پژوهشگر، نویسنده، ویراستار، طراح، عکاس، تدوینگر، مدیر شبکه اجتماعی، متخصص سئو و تحلیل‌گر داده می‌توانند در مراحل مختلف نقش داشته باشند. اگر وظایف مشخص نباشد، روند کار کند، پراکنده و پرخطا می‌شود.",
-          "مدیریت پروژه محتوا شامل برنامه‌ریزی، زمان‌بندی، تقسیم مسئولیت، پیگیری وضعیت، کنترل کیفیت و مستندسازی است. ابزارهای مدیریت پروژه کمک می‌کنند مشخص شود هر محتوا در چه مرحله‌ای قرار دارد؛ ایده، پژوهش، نگارش، طراحی، بازبینی، انتشار یا تحلیل. این شفافیت از دوباره‌کاری و فراموشی جلوگیری می‌کند.",
-          "یکی از بخش‌های مهم مدیریت محتوا، داشتن استانداردهای مشترک است. راهنمای لحن، قالب‌های طراحی، اصول نگارش، شیوه منبع‌دهی، معیارهای کیفیت و دستورالعمل انتشار باید مشخص باشد. وقتی تیم معیار مشترک داشته باشد، خروجی‌ها هماهنگ‌تر و حرفه‌ای‌تر خواهند بود."
-        ],
-        points:["تولید محتوای حرفه‌ای نیازمند هماهنگی تیمی است.","تقویم محتوا و مدیریت پروژه از آشفتگی جلوگیری می‌کند.","استانداردهای مشترک کیفیت خروجی را افزایش می‌دهند."],
-        practical:"برای هر محتوا باید مسئول اصلی، زمان تحویل، وضعیت انجام، فایل‌های مرتبط، بازبین نهایی و کانال انتشار در یک جدول یا ابزار مدیریت پروژه ثبت شود.",
-        checklist:"مسئولیت‌ها، زمان‌بندی، وضعیت تولید، بازبینی، نسخه نهایی، فایل طراحی و گزارش عملکرد باید قابل پیگیری باشد.",
-        key:"مدیریت دقیق، خلاقیت تیمی را به خروجی قابل اعتماد تبدیل می‌کند."
+        title:"تولید محتوا برای کسب‌وکارهای کوچک",
+        tag:"Small Business",
+        seed:"small-business-content-dark",
+        quote:"کسب‌وکار کوچک با محتوای دقیق می‌تواند اعتمادی بزرگ بسازد.",
+        body:"کسب‌وکارهای کوچک معمولاً بودجه تبلیغاتی وسیع ندارند، اما می‌توانند با محتوای منظم، صادقانه و کاربردی جایگاه خوبی در ذهن مخاطب ایجاد کنند. معرفی خدمات، پاسخ به پرسش‌ها، آموزش استفاده، پشت‌صحنه کار و تجربه مشتریان در این مسیر مؤثر است.",
+        analysis:"مزیت کسب‌وکار کوچک نزدیکی به مخاطب است. چنین کسب‌وکاری می‌تواند انسانی‌تر، واقعی‌تر و سریع‌تر ارتباط برقرار کند. محتوا برای این گروه نباید تقلیدی و پرهزینه باشد؛ باید متناسب با نیاز محلی، زبان مشتری و توان اجرایی کسب‌وکار طراحی شود.",
+        practical:"یک تقویم ساده هفتگی می‌تواند شامل معرفی محصول، آموزش کوتاه، پاسخ به سؤال پرتکرار، نمایش رضایت مشتری، معرفی اعضای تیم و پیشنهاد ویژه باشد. استمرار در این برنامه از انتشار پراکنده و بی‌هدف بهتر است.",
+        check:"هویت بصری، شماره تماس، اعتمادسازی، کیفیت عکس، پاسخ‌گویی، لحن صمیمی، قیمت‌گذاری شفاف و ثبت تجربه مشتری باید بررسی شود.",
+        case:"یک شیرینی‌فروشی محلی می‌تواند مراحل آماده‌سازی، مواد اولیه، سفارش‌های خاص و نظر مشتریان را منتشر کند تا حس اعتماد و کیفیت را منتقل نماید.",
+        tools:"موبایل با دوربین مناسب، ابزار طراحی ساده، پیام‌رسان‌ها، شبکه اجتماعی، نقشه گوگل، فرم سفارش و ابزار زمان‌بندی پست کافی و کاربردی هستند."
       },
       {
-        title:"اخلاق، حقوق نشر و مسئولیت حرفه‌ای",
+        title:"برندسازی شخصی و هویت حرفه‌ای دیجیتال",
+        tag:"Personal Brand",
+        seed:"personal-brand-dark",
+        quote:"در فضای دیجیتال، هر محتوایی که منتشر می‌کنیم بخشی از تصویر حرفه‌ای ما را می‌سازد.",
+        body:"برندسازی شخصی یعنی فرد بتواند تخصص، ارزش‌ها، سبک کاری و اعتبار خود را به شکل منظم و قابل اعتماد نشان دهد. تولید محتوا یکی از مهم‌ترین ابزارهای برندسازی شخصی است، زیرا مهارت و نگاه فرد را در معرض دید مخاطبان قرار می‌دهد.",
+        analysis:"برند شخصی با ادعا ساخته نمی‌شود؛ با استمرار، کیفیت، صداقت و حل مسئله ساخته می‌شود. اگر فرد فقط از خود تعریف کند اما محتوای مفید منتشر نکند، اعتماد شکل نمی‌گیرد. مخاطب باید در عمل ببیند که آن فرد توانایی، نظم و نگاه حرفه‌ای دارد.",
+        practical:"برای برندسازی شخصی می‌توان مقاله‌های کوتاه تخصصی، تحلیل تجربه‌های کاری، آموزش‌های کاربردی، نمونه پروژه، دیدگاه درباره مسائل روز حوزه تخصص و پاسخ به پرسش‌های مخاطبان منتشر کرد.",
+        check:"ثبات لحن، تصویر حرفه‌ای، موضوعات مشخص، پرهیز از اغراق، نمونه‌کار معتبر، تعامل محترمانه و هماهنگی میان پروفایل‌ها باید بررسی شود.",
+        case:"یک طراح گرافیک می‌تواند هر هفته روند طراحی یک پروژه را توضیح دهد، چالش‌ها را بنویسد و نسخه نهایی را همراه با دلیل انتخاب رنگ و فرم منتشر کند.",
+        tools:"لینکدین، وب‌سایت شخصی، شبکه‌های اجتماعی، نمونه‌کار آنلاین، خبرنامه، رزومه دیجیتال و ابزار تحلیل پروفایل کاربرد دارند."
+      },
+      {
+        title:"تقویم محتوایی و مدیریت تیم تولید",
+        tag:"Workflow",
+        seed:"content-calendar-team-dark",
+        quote:"محتوای حرفه‌ای حاصل اتفاق نیست؛ نتیجه برنامه، هماهنگی و بازبینی مداوم است.",
+        body:"تقویم محتوایی سندی است که موضوعات، زمان انتشار، مسئول تولید، قالب محتوا، کانال انتشار و وضعیت هر محتوا را مشخص می‌کند. این ابزار از پراکندگی جلوگیری می‌کند و باعث می‌شود تولید محتوا قابل پیگیری و منظم باشد.",
+        analysis:"بدون تقویم، تیم‌ها معمولاً درگیر تصمیم‌های لحظه‌ای می‌شوند. نتیجه این وضعیت، تأخیر، افت کیفیت، تکرار موضوعات و ناهماهنگی لحن است. تقویم محتوایی باعث می‌شود مسیر تولید از ایده تا انتشار شفاف شود.",
+        practical:"در شروع هر ماه باید موضوعات اصلی، مناسبت‌ها، کمپین‌ها، نیازهای مخاطب و ظرفیت تیم بررسی شود. سپس برای هر محتوا زمان پژوهش، نگارش، طراحی، بازبینی، انتشار و تحلیل تعیین گردد.",
+        check:"موضوع، هدف، مسئول، موعد تحویل، قالب، کانال، وضعیت تولید، تأیید نهایی و شاخص سنجش باید در تقویم ثبت شود.",
+        case:"یک تیم دانشگاهی برای معرفی رویداد علمی می‌تواند از دو هفته قبل محتوای اطلاع‌رسانی، معرفی سخنران، نکات آموزشی، گزارش روز رویداد و جمع‌بندی پس از آن را برنامه‌ریزی کند.",
+        tools:"Trello، Notion، Google Sheets، Asana، تقویم گوگل، ابزار زمان‌بندی شبکه اجتماعی و فضای ذخیره‌سازی مشترک کاربرد دارند."
+      },
+      {
+        title:"اخلاق، کپی‌رایت و اصالت محتوا",
         tag:"Ethics",
-        seed:"digital-ethics-copyright",
-        quote:"اعتبار محتوا فقط به زیبایی و بازدید وابسته نیست؛ به صداقت، انصاف و رعایت حقوق دیگران نیز وابسته است.",
-        paragraphs:[
-          "در فضای دیجیتال، کپی کردن متن، تصویر، ویدئو یا ایده بسیار ساده شده است، اما سادگی دسترسی به معنای مجاز بودن استفاده نیست. حقوق نشر، مالکیت فکری، اجازه استفاده از تصویر، ذکر منبع، احترام به حریم خصوصی و پرهیز از تحریف اطلاعات از اصول مهم اخلاق حرفه‌ای در تولید محتوا هستند.",
-          "محتوای غیراخلاقی ممکن است در کوتاه‌مدت توجه جلب کند، اما در بلندمدت به اعتبار فرد یا سازمان آسیب می‌زند. انتشار اطلاعات نادرست، استفاده از تصویر افراد بدون اجازه، تیترهای فریبنده، نقل قول ناقص، بزرگ‌نمایی غیرواقعی و حمله شخصی نمونه‌هایی از رفتارهای غیرحرفه‌ای هستند.",
-          "مسئولیت حرفه‌ای یعنی تولیدکننده محتوا بداند پیام او می‌تواند بر تصمیم، احساس، باور و رفتار مخاطب اثر بگذارد. بنابراین باید میان جذابیت و دقت تعادل برقرار کند. محتوای مسئولانه، هم اثرگذار است و هم قابل دفاع."
-        ],
-        points:["رعایت حقوق نشر بخشی از اعتبار تولیدکننده محتواست.","تیتر و تصویر نباید مخاطب را فریب دهند.","محتوا می‌تواند پیامد اجتماعی و اخلاقی داشته باشد."],
-        practical:"در هر پروژه باید منبع تصاویر، مجوز استفاده، نام نویسندگان، نقل قول‌ها و داده‌های آماری ثبت شود تا در صورت نیاز قابل پیگیری باشد.",
-        checklist:"اجازه استفاده از تصویر، ذکر منبع، صحت نقل قول، عدم نقض حریم خصوصی، پرهیز از اغراق و احترام به مخاطب بررسی شود.",
-        key:"اخلاق حرفه‌ای، سرمایه پنهان و ماندگار تولید محتواست."
+        seed:"copyright-ethics-dark",
+        quote:"محتوای بی‌اخلاق شاید سریع دیده شود، اما اعتبار پایدار نمی‌سازد.",
+        body:"اخلاق در تولید محتوا شامل صداقت، احترام به مخاطب، ذکر منبع، رعایت حقوق پدیدآورندگان، پرهیز از تحریف، حفاظت از حریم خصوصی و خودداری از انتشار اطلاعات آسیب‌زا است. در فضای دیجیتال، یک خطای اخلاقی می‌تواند به سرعت گسترش یابد.",
+        analysis:"کپی‌برداری، استفاده بدون اجازه از تصویر، جعل نقل‌قول، تیتر فریبنده و دستکاری اطلاعات، اعتماد مخاطب را از بین می‌برد. حتی اگر چنین محتواهایی در کوتاه‌مدت بازدید بگیرند، در بلندمدت اعتبار فرد یا سازمان را تضعیف می‌کنند.",
+        practical:"برای تولید حرفه‌ای باید بانک منابع معتبر، شیوه‌نامه ارجاع، مجوز استفاده از تصاویر، سیاست حفظ داده‌ها و فرایند بازبینی اخلاقی وجود داشته باشد. این موارد مخصوص پروژه‌های بزرگ نیست؛ حتی صفحه‌های کوچک نیز به آن نیاز دارند.",
+        check:"ذکر منبع، مجوز تصویر، عدم تحریف، احترام به افراد، حفظ اطلاعات شخصی، شفافیت تبلیغاتی و امکان اصلاح خطا باید بررسی شود.",
+        case:"اگر از عکس یک عکاس در پوستر استفاده شود، باید مجوز یا منبع آن روشن باشد. استفاده بدون اجازه، حتی در پروژه آموزشی، می‌تواند از نظر اخلاقی و حقوقی مشکل‌ساز باشد.",
+        tools:"بانک تصاویر دارای مجوز، ابزار بررسی سرقت ادبی، شیوه‌نامه ارجاع، فرم رضایت انتشار تصویر و آرشیو منابع مورد استفاده کاربرد دارند."
       },
       {
-        title:"چالش‌ها و آسیب‌های تولید محتوا",
-        tag:"Challenges",
-        seed:"digital-content-challenges",
-        quote:"هرچه تولید محتوا آسان‌تر می‌شود، تشخیص محتوای دقیق، اصیل و ارزشمند دشوارتر می‌گردد.",
-        paragraphs:[
-          "رشد ابزارها و پلتفرم‌ها باعث شده حجم عظیمی از محتوا هر روز منتشر شود. این فراوانی از یک سو فرصت دیده‌شدن ایجاد می‌کند و از سوی دیگر باعث اشباع اطلاعات، کاهش تمرکز مخاطب، رقابت شدید و افت کیفیت می‌شود. بسیاری از محتواها تکراری، سطحی، بدون منبع و صرفاً برای جلب توجه کوتاه‌مدت تولید می‌شوند.",
-          "از دیگر چالش‌ها می‌توان به فرسودگی تولیدکنندگان محتوا، فشار الگوریتم‌ها، وابستگی بیش از حد به ترندها، نقض کپی‌رایت، انتشار اطلاعات نادرست، کاهش حریم خصوصی و افت اصالت اشاره کرد. وقتی معیار موفقیت فقط تعداد بازدید باشد، ممکن است کیفیت، عمق و مسئولیت قربانی شوند.",
-          "برای مقابله با این آسیب‌ها، تولید محتوا باید بر پایه استراتژی، پژوهش، اخلاق، تحلیل و بازنگری انجام شود. تولیدکننده حرفه‌ای باید بداند چه زمانی باید تولید کند، چه زمانی باید سکوت کند، چه زمانی محتوا را اصلاح کند و چه زمانی از انتشار محتوای کم‌کیفیت پرهیز نماید."
-        ],
-        points:["اشباع محتوا رقابت برای توجه را سخت‌تر کرده است.","کیفیت نباید قربانی سرعت و ترند شود.","اصالت و اعتبار، مزیت رقابتی بلندمدت هستند."],
-        practical:"برای جلوگیری از افت کیفیت، بهتر است پیش از انتشار هر محتوا یک چک‌لیست کنترل کیفیت وجود داشته باشد و محتواهای قدیمی نیز دوره‌ای بازبینی و به‌روزرسانی شوند.",
-        checklist:"اصالت، منبع، هدف، تازگی، کیفیت نگارش، تصویر، لحن، صحت داده و ارزش واقعی برای مخاطب بررسی شود.",
-        key:"چالش اصلی امروز، تولید بیشتر نیست؛ تولید بهتر و معتبرتر است."
+        title:"بومی‌سازی، دسترس‌پذیری و عدالت محتوایی",
+        tag:"Accessibility",
+        seed:"accessible-local-content-dark",
+        quote:"محتوای خوب باید برای افراد بیشتری قابل فهم، قابل دسترس و قابل استفاده باشد.",
+        body:"بومی‌سازی یعنی محتوا با زبان، فرهنگ، نیاز، تجربه و شرایط مخاطب هماهنگ شود. دسترس‌پذیری نیز به این معناست که افراد با توانایی‌ها و شرایط متفاوت بتوانند از محتوا استفاده کنند؛ مانند استفاده از زیرنویس، متن جایگزین تصویر و طراحی خوانا.",
+        analysis:"محتوایی که فقط از نظر فنی زیباست اما برای بخشی از مخاطبان قابل استفاده نیست، کامل محسوب نمی‌شود. اندازه فونت، تضاد رنگ، سادگی زبان، توضیح تصویرها، زیرنویس و سازگاری با موبایل در تجربه مخاطبان مختلف اثر مستقیم دارد.",
+        practical:"در طراحی محتوا باید نسخه موبایل بررسی شود، برای تصویرها متن جایگزین نوشته شود، ویدئوها زیرنویس داشته باشند، اصطلاحات تخصصی توضیح داده شوند و مثال‌ها با فرهنگ و زندگی مخاطبان هماهنگ باشند.",
+        check:"خوانایی، تضاد رنگ، زیرنویس، متن جایگزین، زبان ساده، حجم فایل، سرعت بارگذاری و سازگاری موبایل باید کنترل شود.",
+        case:"یک ویدئوی آموزشی اگر زیرنویس داشته باشد، هم برای افراد کم‌شنوا مفید است و هم برای کسانی که در محیط عمومی نمی‌توانند صدا را پخش کنند.",
+        tools:"ابزار بررسی کنتراست رنگ، زیرنویس‌ساز، تست موبایل، فشرده‌ساز تصویر، راهنمای نگارش ساده و ابزار متن جایگزین کاربرد دارند."
+      },
+      {
+        title:"مدیریت بحران و پاسخ‌گویی محتوایی",
+        tag:"Crisis",
+        seed:"crisis-communication-dark",
+        quote:"در بحران، سکوت بی‌برنامه و پاسخ شتاب‌زده هر دو می‌توانند آسیب‌زا باشند.",
+        body:"بحران محتوایی زمانی رخ می‌دهد که انتشار یک پیام، خطا، شکایت، شایعه یا برداشت نادرست باعث واکنش منفی مخاطبان شود. در چنین شرایطی، نحوه پاسخ‌گویی اهمیت زیادی دارد و می‌تواند بحران را کنترل یا تشدید کند.",
+        analysis:"مدیریت بحران نیازمند صداقت، سرعت منطقی، پذیرش مسئولیت در صورت خطا و ارائه راه‌حل است. حذف ناگهانی محتوا بدون توضیح، پاسخ عصبی یا نادیده گرفتن مخاطبان معمولاً اعتماد را کاهش می‌دهد. مخاطب انتظار دارد مسئله به شکل محترمانه و شفاف پیگیری شود.",
+        practical:"سازمان‌ها باید از قبل سناریوی پاسخ‌گویی داشته باشند؛ یعنی مشخص باشد چه کسی پاسخ می‌دهد، چه زمانی اطلاع‌رسانی می‌شود، چه اطلاعاتی قابل انتشار است و چگونه اصلاح یا عذرخواهی انجام می‌گیرد.",
+        check:"تشخیص سطح بحران، توقف انتشارهای حساس، بررسی واقعیت، هماهنگی تیم، پیام رسمی، لحن محترمانه و پیگیری پس از پاسخ باید انجام شود.",
+        case:"اگر یک پست تبلیغاتی باعث سوءبرداشت شود، پاسخ مناسب می‌تواند توضیح نیت اصلی، پذیرش ضعف پیام، اصلاح محتوا و تشکر از مخاطبانی باشد که موضوع را مطرح کرده‌اند.",
+        tools:"مانیتورینگ شبکه اجتماعی، سیستم ثبت شکایت، پیام آماده بحران، گروه هماهنگی داخلی و گزارش تحلیل پس از بحران کاربرد دارند."
       },
       {
         title:"آینده تکنولوژی و تولید محتوا",
         tag:"Future",
-        seed:"future-content-technology",
-        quote:"آینده محتوا به سمت شخصی‌سازی، تعامل عمیق‌تر، واقعیت‌های ترکیبی و تحلیل دقیق‌تر حرکت می‌کند.",
-        paragraphs:[
-          "آینده تولید محتوا تحت تأثیر فناوری‌های هوشمند، واقعیت افزوده، واقعیت مجازی، اینترنت پرسرعت، ابزارهای تحلیلی پیشرفته و پلتفرم‌های تعاملی شکل خواهد گرفت. محتوا بیش از گذشته شخصی‌سازی می‌شود و هر کاربر ممکن است بر اساس نیاز، موقعیت، سابقه رفتاری و علایق خود تجربه‌ای متفاوت دریافت کند.",
-          "واقعیت افزوده و واقعیت مجازی می‌توانند تجربه محتوا را از مشاهده ساده به حضور فعال تبدیل کنند. در آموزش، کاربر می‌تواند وارد یک محیط شبیه‌سازی شود. در فروش، محصول را در فضای واقعی خود ببیند. در فرهنگ و گردشگری، امکان بازدید مجازی از مکان‌ها و آثار فراهم می‌شود. این تغییرات مرز میان محتوا، تجربه و خدمت را کم‌رنگ‌تر می‌کند.",
-          "با وجود همه این تحولات، مهارت انسانی همچنان اهمیت دارد. ابزارها می‌توانند بخشی از تولید را سریع‌تر کنند، اما انتخاب زاویه نگاه، تشخیص نیاز واقعی، روایت معتبر، مسئولیت اخلاقی و ایجاد اعتماد به تفکر انسانی وابسته است. آینده موفق متعلق به کسانی است که فناوری را بشناسند اما هویت انسانی محتوا را حفظ کنند."
-        ],
-        points:["شخصی‌سازی تجربه محتوا گسترش خواهد یافت.","قالب‌های واقعیت افزوده و مجازی پررنگ‌تر می‌شوند.","اعتماد و اصالت در آینده ارزش بیشتری پیدا می‌کند."],
-        practical:"سازمان‌ها باید از هم‌اکنون آرشیو داده، استاندارد تولید، مهارت‌های چندرسانه‌ای و توان تحلیل را تقویت کنند تا برای نسل بعدی پلتفرم‌ها آماده باشند.",
-        checklist:"آمادگی فناورانه، مهارت تیم، امنیت داده، تجربه کاربر، سناریوی تعاملی و اخلاق استفاده از داده باید مورد توجه قرار گیرد.",
-        key:"آینده محتوا ترکیبی از فناوری پیشرفته و فهم عمیق انسانی خواهد بود."
+        seed:"future-content-tech-dark",
+        quote:"آینده محتوا به سمت تجربه‌های شخصی‌تر، تعاملی‌تر و هوشمندتر حرکت می‌کند.",
+        body:"آینده تولید محتوا تحت تأثیر هوش مصنوعی، واقعیت افزوده، واقعیت مجازی، اینترنت پرسرعت، ابزارهای تحلیل پیشرفته و پلتفرم‌های تعاملی خواهد بود. محتوا بیش از گذشته بر اساس رفتار، نیاز و موقعیت مخاطب شخصی‌سازی می‌شود.",
+        analysis:"با وجود پیشرفت فناوری، ارزش انسانی محتوا از بین نمی‌رود. ابزارها می‌توانند سرعت و امکانات را افزایش دهند، اما تشخیص مسئله واقعی، روایت معتبر، مسئولیت اخلاقی و ایجاد اعتماد همچنان به انسان وابسته است. آینده متعلق به کسانی است که فناوری را بفهمند اما اسیر آن نشوند.",
+        practical:"تولیدکنندگان محتوا باید مهارت‌های خود را در تحلیل داده، روایت چندرسانه‌ای، طراحی تجربه کاربر، اخلاق دیجیتال و استفاده مسئولانه از ابزارهای هوشمند تقویت کنند. یادگیری مداوم در این حوزه یک انتخاب نیست، ضرورت است.",
+        check:"رصد روندهای جدید، ارزیابی ابزارها، آموزش تیم، حفظ امنیت داده، توجه به اصالت و بررسی اثر اجتماعی فناوری باید انجام شود.",
+        case:"در آینده ممکن است یک محتوای آموزشی برای هر دانشجو مسیر متفاوتی بسازد؛ اما طراحی هدف آموزشی و کنترل کیفیت همچنان نیازمند متخصص انسانی است.",
+        tools:"واقعیت افزوده، واقعیت مجازی، موتورهای پیشنهاد محتوا، تحلیل پیش‌بینانه، ابزارهای هوشمند و پلتفرم‌های تعاملی نقش پررنگ‌تری خواهند داشت."
       },
       {
-        title:"مهارت‌های لازم برای تولیدکننده محتوای حرفه‌ای",
-        tag:"Skills",
-        seed:"professional-content-creator",
-        quote:"تولیدکننده محتوای حرفه‌ای فقط نویسنده یا طراح نیست؛ او پژوهشگر، روایت‌گر، تحلیل‌گر و مدیر تجربه مخاطب است.",
-        paragraphs:[
-          "تولیدکننده محتوای حرفه‌ای باید مجموعه‌ای از مهارت‌های متنوع را در کنار هم داشته باشد. مهارت نگارش، جست‌وجوی دقیق، شناخت مخاطب، سئو، طراحی اولیه، کار با ابزارهای انتشار، تحلیل داده، مدیریت زمان، خلاقیت، ویرایش، مصاحبه، سناریونویسی و آشنایی با شبکه‌های اجتماعی از مهم‌ترین توانایی‌های این حوزه هستند.",
-          "علاوه بر مهارت فنی، ویژگی‌هایی مانند مسئولیت‌پذیری، دقت، کنجکاوی، روحیه یادگیری، اخلاق حرفه‌ای و توانایی کار تیمی اهمیت بالایی دارند. فضای تکنولوژی و محتوا دائماً تغییر می‌کند؛ بنابراین فرد موفق کسی است که مهارت‌های خود را به‌روز نگه دارد و بتواند میان خلاقیت، نیاز مخاطب و هدف پروژه تعادل ایجاد کند.",
-          "یک تولیدکننده حرفه‌ای باید بتواند از مرحله ایده تا انتشار و تحلیل را بفهمد. حتی اگر همه کارها را خودش انجام ندهد، باید منطق هر مرحله را بشناسد تا بتواند با اعضای تیم ارتباط مؤثر داشته باشد. این نگاه جامع، کیفیت تصمیم‌گیری و خروجی محتوا را افزایش می‌دهد."
-        ],
-        points:["یادگیری مداوم شرط ماندگاری در این حوزه است.","مهارت تحلیل داده در کنار خلاقیت اهمیت دارد.","اخلاق حرفه‌ای بخشی از اعتبار تولیدکننده محتواست."],
-        practical:"برای رشد فردی، تولیدکننده محتوا می‌تواند نمونه‌کار بسازد، منابع تخصصی بخواند، پروژه‌های کوچک انجام دهد، بازخورد بگیرد و عملکرد محتوای خود را تحلیل کند.",
-        checklist:"نگارش، پژوهش، طراحی، سئو، تحلیل، مدیریت زمان، ارتباط تیمی و ویرایش باید به‌صورت دوره‌ای تمرین و ارزیابی شود.",
-        key:"مهارت حرفه‌ای یعنی تبدیل ایده به محتوایی مفید، زیبا، دقیق و قابل سنجش."
-      },
-      {
-        title:"جمع‌بندی و نتیجه‌گیری نهایی",
+        title:"جمع‌بندی نهایی تحقیق",
         tag:"Conclusion",
-        seed:"final-conclusion-content",
-        quote:"تکنولوژی مسیر تولید محتوا را تغییر داده، اما جوهره اصلی محتوا همچنان فهم انسان و انتقال معنادار پیام است.",
-        paragraphs:[
-          "بررسی مباحث این تحقیق نشان می‌دهد که تکنولوژی و تولید محتوا دو حوزه جدا از هم نیستند، بلکه در جهان امروز به‌شدت در هم تنیده‌اند. فناوری ابزارها، سرعت، دقت، تنوع قالب‌ها و امکان تحلیل را فراهم کرده است؛ اما کیفیت نهایی محتوا به هدف‌گذاری، شناخت مخاطب، پژوهش، نگارش، طراحی، اخلاق و توانایی روایت بستگی دارد.",
-          "محتوای حرفه‌ای باید مسئله‌ای را حل کند، دانشی را منتقل نماید، تصمیمی را آسان‌تر کند، تجربه‌ای بسازد یا ارتباطی پایدار ایجاد کند. اگر محتوا فقط برای پر کردن صفحه یا دنبال کردن ترند تولید شود، احتمالاً عمر کوتاهی خواهد داشت. اما اگر بر پایه نیاز واقعی مخاطب و استانداردهای حرفه‌ای ساخته شود، می‌تواند اثر بلندمدت داشته باشد.",
-          "در نهایت، آینده متعلق به تولیدکنندگانی است که بتوانند میان فناوری و انسانیت تعادل برقرار کنند. ابزارهای دیجیتال، هوش مصنوعی، تحلیل داده و رسانه‌های نوین فرصت‌های بزرگی فراهم کرده‌اند، اما اعتماد، اصالت، دقت و خلاقیت همچنان مهم‌ترین سرمایه‌های محتوای موفق هستند."
-        ],
-        points:["تکنولوژی ابزار توانمندساز تولید محتواست.","کیفیت محتوا به تفکر، پژوهش و اخلاق وابسته است.","آینده محتوا بر پایه ترکیب فناوری، خلاقیت و اعتماد ساخته می‌شود."],
-        practical:"برای اجرای عملی نتایج تحقیق، پیشنهاد می‌شود هر تیم یا فرد محتوایی یک برنامه منظم شامل استراتژی، تقویم محتوا، چک‌لیست کیفیت، آرشیو منابع و گزارش عملکرد تهیه کند.",
-        checklist:"هدف، مخاطب، پیام، قالب، کانال، کیفیت، اخلاق، تحلیل و اصلاح مستمر باید در همه پروژه‌ها رعایت شود.",
-        key:"محتوای ارزشمند، فناوری را به تجربه‌ای انسانی، آموزشی و اثرگذار تبدیل می‌کند."
+        seed:"final-conclusion-content-dark",
+        quote:"تکنولوژی مسیر را تغییر داده است؛ اما معنا، اعتماد و کیفیت همچنان به اندیشه انسانی وابسته‌اند.",
+        body:"بررسی موضوع تکنولوژی و تولید محتوا نشان می‌دهد که فناوری نه‌تنها ابزارهای تولید و انتشار را دگرگون کرده، بلکه شیوه فکر کردن به پیام، مخاطب و اثرگذاری را نیز تغییر داده است. امروز محتوا باید هم زیبا باشد، هم دقیق، هم قابل دسترس و هم قابل سنجش.",
+        analysis:"محتوای موفق حاصل ترکیب چند عامل است: شناخت مخاطب، هدف روشن، پژوهش معتبر، ساختار مناسب، طراحی بصری، انتخاب کانال درست، اخلاق حرفه‌ای و تحلیل عملکرد. نبود هر یک از این عوامل می‌تواند اثرگذاری محتوا را کاهش دهد.",
+        practical:"برای اجرای حرفه‌ای یک پروژه محتوایی باید چرخه‌ای کامل طراحی شود: شناخت مسئله، تعیین هدف، تحلیل مخاطب، تولید نسخه اولیه، بازبینی، طراحی، انتشار، پاسخ‌گویی، سنجش نتیجه و به‌روزرسانی. این چرخه باعث می‌شود محتوا زنده و قابل رشد باقی بماند.",
+        check:"هدف، مخاطب، منبع، کیفیت نگارش، تصویر، سئو، دسترس‌پذیری، اخلاق، انتشار و تحلیل نهایی باید به شکل یکپارچه بررسی شوند.",
+        case:"یک تحقیق، صفحه آموزشی، کمپین فروش یا پروژه دانشگاهی زمانی اثرگذار است که مخاطب پس از مطالعه یا مشاهده آن احساس کند چیزی آموخته، تصمیم بهتری گرفته یا نگاه دقیق‌تری پیدا کرده است.",
+        tools:"ابزارهای پژوهش، نگارش، طراحی، تدوین، انتشار، تحلیل و مدیریت پروژه در کنار مهارت انسانی، مجموعه کامل تولید محتوای حرفه‌ای را می‌سازند."
       }
     ];
 
     const references = [
-      "کاتلر، فیلیپ و همکاران. اصول بازاریابی و مدیریت ارتباط با مشتری در فضای دیجیتال.",
-      "چفی، دیو. بازاریابی دیجیتال؛ راهبرد، اجرا و عمل.",
-      "کراگ، استیو. مرا وادار به فکر کردن نکن؛ اصول تجربه کاربری و طراحی وب.",
-      "نلسن، جیکوب. مقالات کاربردپذیری، خوانایی وب و رفتار کاربران آنلاین.",
-      "گزارش‌های تحلیلی درباره روندهای جهانی تولید محتوا، شبکه‌های اجتماعی و بازاریابی دیجیتال.",
-      "منابع آموزشی مرتبط با سئو، مدیریت محتوا، طراحی تجربه کاربر و تحلیل داده‌های دیجیتال.",
-      "مطالعات و گزارش‌های منتشرشده درباره آموزش آنلاین، رسانه‌های نوین و فرهنگ دیجیتال.",
-      "منابع عمومی و تخصصی در زمینه اخلاق رسانه، حقوق نشر، مالکیت فکری و سواد رسانه‌ای."
+      "Kotler, P., Kartajaya, H., & Setiawan, I. Marketing 5.0: Technology for Humanity.",
+      "Pulizzi, J. Epic Content Marketing.",
+      "Handley, A. Everybody Writes: Your Go-To Guide to Creating Ridiculously Good Content.",
+      "Krug, S. Don't Make Me Think: A Common Sense Approach to Web Usability.",
+      "Norman, D. The Design of Everyday Things.",
+      "Nielsen Norman Group. Articles on User Experience, Content Strategy and Usability.",
+      "Google Search Central. SEO Starter Guide and Search Quality Documentation.",
+      "HubSpot Research. Reports on Content Marketing, Social Media and Customer Experience.",
+      "Content Marketing Institute. Annual B2B and B2C Content Marketing Benchmarks.",
+      "UNESCO. Guidelines on Media and Information Literacy.",
+      "World Wide Web Consortium. Web Content Accessibility Guidelines.",
+      "McLuhan, M. Understanding Media: The Extensions of Man.",
+      "Castells, M. The Rise of the Network Society.",
+      "Kaplan, A. M., & Haenlein, M. Users of the world, unite! The challenges and opportunities of Social Media.",
+      "Chaffey, D., & Ellis-Chadwick, F. Digital Marketing.",
+      "Anderson, C. The Long Tail: Why the Future of Business Is Selling Less of More."
     ];
 
     function img(seed){
-      return `https://picsum.photos/seed/${seed}/1000/720`;
+      return `https://picsum.photos/seed/${encodeURIComponent(seed)}/1100/760`;
     }
 
     function corners(){
-      return `<span class="corner tr"></span><span class="corner tl"></span><span class="corner br"></span><span class="corner bl"></span>`;
+      return `
+        <span class="corner tr"></span>
+        <span class="corner tl"></span>
+        <span class="corner br"></span>
+        <span class="corner bl"></span>
+      `;
     }
 
-    function shell(content, page, extraClass=""){
+    function shell(content,page,extra=""){
       return `
-        <section class="sheet ${extraClass}">
+        <section class="sheet ${extra}">
           ${corners()}
-          <div class="page-inner">
+          <div class="inner">
             ${content}
-            ${extraClass.includes("cover") ? "" : `
-              <div class="footer">
-                <span>${meta.university} | ${meta.date}</span>
-                <span>تحقیق تکنولوژی و تولید محتوا</span>
-                <span class="page-no">${page}</span>
-              </div>
-            `}
+            <div class="footer">
+              <span>${meta.title}</span>
+              <span class="page-no">${page}</span>
+              <span>${meta.date}</span>
+            </div>
           </div>
         </section>
       `;
     }
 
     function coverPage(){
-      return shell(`
-        <div class="cover-kicker">پژوهش دانشگاهی | نسخه صفحه‌بندی‌شده A4</div>
+      return `
+        <section class="sheet cover">
+          ${corners()}
+          <div class="inner">
+            <div class="cover-title">
+              <span class="kicker">پژوهش دانشگاهی</span>
+              <h1>${meta.title}</h1>
+              <p>بررسی جامع نقش فناوری در خلق، انتشار، تحلیل و آینده محتوا</p>
+            </div>
 
-        <div class="cover-title-box">
-          <h1>${meta.title}</h1>
-          <div class="cover-sub">${meta.subtitle}</div>
-        </div>
+            <div class="cover-panel">
+              <table class="cover-table">
+                <tr>
+                  <td>نام محققین</td>
+                  <td>${meta.researchers}</td>
+                </tr>
+                <tr>
+                  <td>استاد راهنما</td>
+                  <td>${meta.advisor}</td>
+                </tr>
+                <tr>
+                  <td>دانشگاه</td>
+                  <td>${meta.university}</td>
+                </tr>
+                <tr>
+                  <td>تاریخ</td>
+                  <td>${meta.date}</td>
+                </tr>
+                <tr>
+                  <td>موضوع</td>
+                  <td>تکنولوژی، رسانه‌های دیجیتال، تولید محتوا و کاربردهای عملی</td>
+                </tr>
+              </table>
+            </div>
 
-        <table class="cover-table">
-          <tr><td>نام محققین</td><td>${meta.researchers}</td></tr>
-          <tr><td>استاد راهنما</td><td>${meta.advisor}</td></tr>
-          <tr><td>دانشگاه</td><td>${meta.university}</td></tr>
-          <tr><td>تاریخ ارائه</td><td>${meta.date}</td></tr>
-        </table>
-
-        <p class="cover-note">
-          این تحقیق با هدف بررسی جامع پیوند میان فناوری‌های نوین و فرایند تولید محتوا تهیه شده و موضوعاتی مانند استراتژی، نگارش، طراحی بصری، شبکه‌های اجتماعی، تحلیل داده، کاربردهای عملی، اخلاق حرفه‌ای و آینده محتوا را پوشش می‌دهد.
-        </p>
-      `,1,"cover");
+            <div class="quote">
+              <b>چکیده جلد:</b>
+              این تحقیق با رویکردی کاربردی و تحلیلی، مسیر تولید محتوا را از شناخت مخاطب و طراحی پیام تا انتشار، تحلیل عملکرد، اخلاق حرفه‌ای و آینده فناوری بررسی می‌کند.
+            </div>
+          </div>
+        </section>
+      `;
     }
 
-    function tocPage(part, page){
-      const all = [
-        ...chapters.map((c,i)=>({title:c.title,page:i+4})),
-        {title:"منابع و مآخذ",page:29},
-        {title:"صفحه پایانی و دریافت PDF",page:30}
-      ];
-      const half = Math.ceil(all.length / 2);
-      const items = part === 1 ? all.slice(0, half) : all.slice(half);
-
+    function tocPage(part,page){
+      const all = chapters.map((c,i)=>({title:c.title,page:i+4}));
+      const list = part === 1 ? all.slice(0,13) : all.slice(13);
       return shell(`
         <div class="topbar">
-          <span class="badge">فهرست مطالب | بخش ${part}</span>
-          <span class="mini">${meta.researchers}</span>
+          <span class="badge">Table of Contents</span>
+          <span>فهرست مطالب | بخش ${part}</span>
         </div>
 
-        <h2>فهرست ${part === 1 ? "بخش نخست" : "بخش دوم"}</h2>
+        <h2>فهرست مطالب ${part === 1 ? "بخش اول" : "بخش دوم"}</h2>
 
-        <p class="lead">
-          برای خوانایی بهتر و جلوگیری از شلوغی نامنظم، فهرست مطالب در دو صفحه تنظیم شده است. شماره‌های مقابل هر عنوان، جایگاه تقریبی هر بخش در نسخه A4 را نشان می‌دهد.
-        </p>
+        <div class="visual">
+          <img src="${img(part === 1 ? "dark-table-of-contents-one" : "dark-table-of-contents-two")}" alt="فهرست">
+          <div class="cap">فهرست دوصفحه‌ای برای خوانایی بهتر و جلوگیری از فشردگی مطالب</div>
+        </div>
 
-        <div class="toc-grid">
-          ${items.map(item=>`
+        <div class="toc-wrap">
+          ${list.map(item=>`
             <div class="toc-item">
               <span>${item.title}</span>
               <span class="toc-num">${item.page}</span>
@@ -1119,46 +507,44 @@
           `).join("")}
         </div>
 
-        <div class="bottom-band">
-          <div class="bottom-card">
-            <h3>راهنمای مطالعه</h3>
-            <p>پیشنهاد می‌شود ابتدا مقدمه، سپس بخش‌های استراتژی، مخاطب، طراحی، سئو و کاربردهای عملی مطالعه شوند.</p>
+        <div class="bottom">
+          <div class="mini-card">
+            <h3>نحوه مطالعه</h3>
+            <p>مطالب از مبانی و تعریف‌ها شروع شده و به کاربردهای عملی، اخلاق، آینده و نتیجه‌گیری می‌رسد.</p>
           </div>
-          <div class="bottom-card">
-            <h3>ساختار تحقیق</h3>
-            <p>مطالب از مبانی نظری شروع شده و به کاربردهای عملی، چالش‌ها، آینده و جمع‌بندی نهایی می‌رسد.</p>
+          <div class="mini-card">
+            <h3>ساختار صفحات</h3>
+            <p>هر صفحه شامل متن اصلی، تحلیل اختصاصی، تصویر، کاربرد عملی، چک‌لیست و نمونه کاربردی است.</p>
           </div>
-          <div class="bottom-card">
-            <h3>هدف فهرست</h3>
-            <p>فهرست دوصفحه‌ای برای نظم بیشتر، خوانایی بهتر و جلوگیری از فشردگی نامناسب طراحی شده است.</p>
+          <div class="mini-card">
+            <h3>هدف تحقیق</h3>
+            <p>هدف، ارائه یک نگاه جامع و قابل ارائه درباره نقش تکنولوژی در تولید محتوای حرفه‌ای است.</p>
           </div>
         </div>
       `,page);
     }
 
-    function chapterPage(chapter, index){
+    function chapterPage(chapter,index){
       const page = index + 4;
       return shell(`
         <div class="topbar">
           <span class="badge">${chapter.tag}</span>
-          <span class="mini">${meta.researchers} | صفحه ${page}</span>
+          <span>${meta.researchers} | صفحه ${page}</span>
         </div>
 
         <h2>${chapter.title}</h2>
 
-        <div class="content-grid">
+        <div class="grid">
           <div class="card">
-            <p class="lead">${chapter.paragraphs[0]}</p>
-            <p class="text">${chapter.paragraphs[1]}</p>
-            <p class="text">${chapter.paragraphs[2]}</p>
+            <p class="lead">${chapter.body}</p>
+            <p class="text">${chapter.analysis}</p>
           </div>
 
           <div style="display:grid;gap:10px;">
             <div class="visual">
               <img src="${img(chapter.seed)}" alt="${chapter.title}">
-              <div class="visual-caption">${chapter.title}</div>
+              <div class="cap">${chapter.title}</div>
             </div>
-
             <div class="quote">
               <b>نگاه کلیدی:</b>
               ${chapter.quote}
@@ -1166,57 +552,36 @@
           </div>
         </div>
 
-        <div class="content-grid">
-          <div class="card">
-            <h3>تحلیل تکمیلی</h3>
-            <p class="text">
-              این بخش نشان می‌دهد که موضوع فقط یک بحث نظری نیست، بلکه در برنامه‌ریزی روزانه، آموزش، رسانه، کسب‌وکار، ارتباطات سازمانی و حتی مهارت‌های فردی کاربرد مستقیم دارد. تولید محتوای موفق زمانی شکل می‌گیرد که میان هدف، مخاطب، ابزار، پیام، زیبایی بصری و ارزیابی نتیجه هماهنگی وجود داشته باشد. هرچه این هماهنگی دقیق‌تر باشد، محتوا اثرگذارتر، ماندگارتر و قابل اعتمادتر خواهد بود.
-            </p>
-            <p class="text">
-              در عمل، تولیدکننده محتوا باید هم نگاه خلاقانه داشته باشد و هم نگاه تحلیلی. خلاقیت باعث شکل‌گیری ایده‌های تازه می‌شود، اما تحلیل کمک می‌کند تصمیم‌ها بر اساس شواهد و نتیجه واقعی گرفته شوند. بنابراین ترکیب هنر، دانش، فناوری و اخلاق حرفه‌ای، پایه اصلی تولید محتوای ارزشمند است.
-            </p>
+        <div class="grid">
+          <div class="card gold-card">
+            <h3>کاربرد عملی اختصاصی</h3>
+            <p class="text">${chapter.practical}</p>
+            <h3 style="margin-top:6px;">نمونه کاربردی</h3>
+            <p class="text">${chapter.case}</p>
           </div>
 
           <div class="card">
-            <h3>نکات اصلی این بخش</h3>
-            <div class="info-list">
-              ${chapter.points.map(point=>`
-                <div class="info-item">
-                  <span class="dot"></span>
-                  <span>${point}</span>
-                </div>
-              `).join("")}
-            </div>
-
-            <div class="stats" style="margin-top:8px;">
-              <div class="stat">
-                <b>۱</b>
-                <span>هدف روشن</span>
-              </div>
-              <div class="stat">
-                <b>۲</b>
-                <span>مخاطب دقیق</span>
-              </div>
-              <div class="stat">
-                <b>۳</b>
-                <span>تحلیل نتیجه</span>
-              </div>
+            <h3>چک‌لیست اجرایی</h3>
+            <div class="list">
+              <div class="item"><span class="dot"></span><span>${chapter.check}</span></div>
+              <div class="item"><span class="dot"></span><span>${chapter.tools}</span></div>
+              <div class="item"><span class="dot"></span><span>در پایان این بخش باید مشخص شود محتوا چه مسئله‌ای را حل می‌کند و برای چه مخاطبی ارزش ایجاد می‌نماید.</span></div>
             </div>
           </div>
         </div>
 
-        <div class="bottom-band">
-          <div class="bottom-card">
-            <h3>کاربرد عملی</h3>
-            <p>${chapter.practical}</p>
+        <div class="bottom">
+          <div class="mini-card">
+            <h3>خروجی مورد انتظار</h3>
+            <p>پس از اجرای این بخش، محتوا باید هدفمندتر، قابل سنجش‌تر و برای مخاطب روشن‌تر باشد.</p>
           </div>
-          <div class="bottom-card">
-            <h3>چک‌لیست اجرایی</h3>
-            <p>${chapter.checklist}</p>
+          <div class="mini-card">
+            <h3>ریسک رایج</h3>
+            <p>بی‌توجهی به هدف، مخاطب و کیفیت اجرا باعث می‌شود حتی محتوای پرزحمت نیز اثرگذاری کافی نداشته باشد.</p>
           </div>
-          <div class="bottom-card">
-            <h3>جمع‌بندی کوتاه</h3>
-            <p>${chapter.key}</p>
+          <div class="mini-card">
+            <h3>نکته حرفه‌ای</h3>
+            <p>هر صفحه محتوا باید به تصمیم، یادگیری، اعتماد یا اقدام مشخصی در ذهن مخاطب منتهی شود.</p>
           </div>
         </div>
       `,page);
@@ -1226,66 +591,45 @@
       return shell(`
         <div class="topbar">
           <span class="badge">References</span>
-          <span class="mini">منابع و مآخذ | صفحه ۲۹</span>
+          <span>منابع و مآخذ</span>
         </div>
 
         <h2>منابع و مآخذ</h2>
 
-        <p class="lead">
-          منابع زیر به‌عنوان پشتوانه مفهومی و مطالعاتی تحقیق مورد توجه قرار گرفته‌اند. در موضوع تکنولوژی و تولید محتوا، استفاده از منابع متنوع اهمیت زیادی دارد؛ زیرا این حوزه هم‌زمان با دانش ارتباطات، بازاریابی، رسانه، آموزش، طراحی تجربه کاربر، تحلیل داده و اخلاق دیجیتال ارتباط دارد.
-        </p>
-
-        <div class="content-grid">
+        <div class="grid">
           <div class="card">
-            <h3>فهرست منابع</h3>
+            <p class="lead">
+              در تدوین این تحقیق از منابع حوزه بازاریابی محتوایی، ارتباطات دیجیتال، تجربه کاربر، سئو، آموزش آنلاین، اخلاق رسانه‌ای و دسترس‌پذیری استفاده شده است.
+            </p>
             <ol class="refs">
               ${references.map(ref=>`<li>${ref}</li>`).join("")}
             </ol>
           </div>
 
           <div style="display:grid;gap:10px;">
-            <div class="visual large">
-              <img src="${img("research-library-digital-sources")}" alt="منابع تحقیق">
-              <div class="visual-caption">اعتبار محتوا از پژوهش، منبع معتبر و تحلیل دقیق آغاز می‌شود.</div>
+            <div class="visual big">
+              <img src="${img("dark-digital-library-research")}" alt="منابع">
+              <div class="cap">پژوهش معتبر، ستون اصلی محتوای قابل اعتماد است.</div>
             </div>
-
             <div class="quote">
               <b>یادداشت پژوهشی:</b>
-              در پژوهش‌های مرتبط با فضای دیجیتال، تاریخ انتشار منابع اهمیت زیادی دارد؛ زیرا ابزارها، رفتار کاربران، الگوریتم‌ها و پلتفرم‌ها به‌سرعت تغییر می‌کنند.
+              در حوزه فناوری، تاریخ و اعتبار منبع اهمیت زیادی دارد؛ زیرا ابزارها، الگوریتم‌ها و رفتار کاربران به سرعت تغییر می‌کنند.
             </div>
           </div>
         </div>
 
-        <div class="content-grid">
-          <div class="card">
-            <h3>روش استفاده از منابع</h3>
-            <p class="text">
-              در تدوین یک تحقیق جامع، منابع نباید صرفاً برای پر کردن بخش پایانی استفاده شوند. منبع معتبر باید به فهم بهتر موضوع، مقایسه دیدگاه‌ها، جلوگیری از خطای اطلاعاتی و تقویت استدلال کمک کند. در حوزه تولید محتوا، منابع دانشگاهی دیدگاه نظری می‌دهند، گزارش‌های تخصصی روندهای بازار را نشان می‌دهند و تجربه‌های عملی، کاربرد واقعی مفاهیم را روشن می‌کنند.
-            </p>
+        <div class="bottom">
+          <div class="mini-card">
+            <h3>اعتبار منبع</h3>
+            <p>منبع معتبر باید نویسنده، ناشر، تاریخ و زمینه روشن داشته باشد.</p>
           </div>
-
-          <div class="card">
-            <h3>استاندارد اعتبارسنجی</h3>
-            <div class="info-list">
-              <div class="info-item"><span class="dot"></span><span>بررسی نویسنده، ناشر، تاریخ انتشار و هدف منبع.</span></div>
-              <div class="info-item"><span class="dot"></span><span>مقایسه داده‌ها با چند منبع مستقل و معتبر.</span></div>
-              <div class="info-item"><span class="dot"></span><span>پرهیز از استفاده از مطالب بدون زمینه، بدون تاریخ یا بدون پشتوانه روشن.</span></div>
-            </div>
+          <div class="mini-card">
+            <h3>کاربرد منابع</h3>
+            <p>منابع فقط برای فهرست پایانی نیستند؛ باید به تحلیل دقیق‌تر و استدلال بهتر کمک کنند.</p>
           </div>
-        </div>
-
-        <div class="bottom-band">
-          <div class="bottom-card">
-            <h3>منبع معتبر</h3>
-            <p>منبع معتبر باید قابل پیگیری، دارای نویسنده یا نهاد مشخص و دارای شواهد کافی باشد.</p>
-          </div>
-          <div class="bottom-card">
-            <h3>پژوهش کاربردی</h3>
-            <p>هدف پژوهش فقط گردآوری نیست؛ بلکه باید فهم دقیق‌تر و تصمیم بهتر ایجاد کند.</p>
-          </div>
-          <div class="bottom-card">
+          <div class="mini-card">
             <h3>به‌روزرسانی</h3>
-            <p>در موضوعات دیجیتال، بازبینی و به‌روزرسانی منابع اهمیت ویژه دارد.</p>
+            <p>موضوعات دیجیتال نیازمند بازبینی و استفاده از منابع جدید و قابل پیگیری هستند.</p>
           </div>
         </div>
       `,29);
@@ -1295,47 +639,43 @@
       return shell(`
         <div class="topbar">
           <span class="badge">Final Page</span>
-          <span class="mini">صفحه پایانی | دریافت نسخه PDF</span>
+          <span>صفحه پایانی</span>
         </div>
 
-        <h2>صفحه پایانی</h2>
-
-        <div class="visual large">
-          <img src="${img("elegant-final-page-technology-content")}" alt="صفحه پایانی">
-          <div class="visual-caption">پایان تحقیق؛ آغاز نگاه حرفه‌ای‌تر به تکنولوژی و تولید محتوا</div>
+        <div class="final-hero">
+          <h1>پایان تحقیق</h1>
+          <p>
+            این پژوهش نشان داد که تکنولوژی، تولید محتوا را از یک فعالیت ساده به فرایندی راهبردی، چندرسانه‌ای، داده‌محور و مسئولانه تبدیل کرده است.
+          </p>
+          <button class="download-btn" onclick="downloadPDF()">دانلود PDF مرتب</button>
         </div>
 
-        <div class="card">
+        <div class="visual big">
+          <img src="${img("luxury-final-technology-content-page")}" alt="پایان تحقیق">
+          <div class="cap">تولید محتوای آینده؛ ترکیب فناوری، خلاقیت، تحلیل و اخلاق حرفه‌ای</div>
+        </div>
+
+        <div class="card gold-card">
           <p class="lead">
-            این تحقیق با هدف ارائه تصویری جامع از نقش تکنولوژی در تولید محتوا تنظیم شد. در طول صفحات، از مبانی نظری تا کاربردهای عملی، از طراحی و نگارش تا تحلیل داده، از آموزش و کسب‌وکار تا اخلاق حرفه‌ای و آینده محتوا بررسی شد. نتیجه اصلی آن است که فناوری، مسیر تولید و انتشار محتوا را بسیار گسترده‌تر و سریع‌تر کرده، اما کیفیت واقعی همچنان به تفکر، شناخت مخاطب، پژوهش، زیبایی‌شناسی، صداقت و مسئولیت انسانی وابسته است.
+            جمع‌بندی نهایی این است که محتوای موفق فقط منتشر نمی‌شود؛ طراحی می‌شود، سنجیده می‌شود، اصلاح می‌شود و به نیاز واقعی مخاطب پاسخ می‌دهد. ابزارهای دیجیتال می‌توانند سرعت و کیفیت فرایند را افزایش دهند، اما معنا، اعتماد و مسئولیت همچنان به تفکر انسانی وابسته‌اند.
           </p>
           <p class="text">
-            محتوای موفق محتوایی است که فقط دیده نشود، بلکه فهمیده شود، اعتماد ایجاد کند، مسئله‌ای را حل نماید و اثری ماندگار بر مخاطب بگذارد. تکنولوژی می‌تواند ابزار این مسیر باشد، اما جهت حرکت را انسان تعیین می‌کند.
+            بنابراین هر تولیدکننده محتوا باید علاوه بر مهارت کار با ابزارها، توانایی پژوهش، تحلیل مخاطب، روایت‌سازی، طراحی تجربه، رعایت اخلاق و ارزیابی نتیجه را نیز در خود تقویت کند.
           </p>
         </div>
 
-        <div class="download-page">
-          <div class="big-button">
-            <h1 style="color:white;font-size:25px;">دریافت نسخه PDF تحقیق</h1>
-            <p>
-              با کلیک روی دکمه زیر، کل صفحات تحقیق با همان صفحه‌بندی A4، کادرها، تصاویر، فهرست، منابع و صفحه پایانی به‌صورت PDF آماده دانلود می‌شود. اگر مرورگر شما اجازه دانلود مستقیم نداد، از گزینه چاپ و ذخیره به‌صورت PDF استفاده کنید.
-            </p>
-            <button type="button" onclick="downloadPDF()">دانلود PDF مرتب</button>
-          </div>
-        </div>
-
-        <div class="bottom-band">
-          <div class="bottom-card">
-            <h3>مشخصات تحقیق</h3>
-            <p>موضوع: تکنولوژی و تولید محتوا | قالب: ۳۰ صفحه A4 | طراحی شده برای ارائه و چاپ.</p>
-          </div>
-          <div class="bottom-card">
+        <div class="bottom">
+          <div class="mini-card">
             <h3>محققین</h3>
-            <p>${meta.researchers} | استاد راهنما: ${meta.advisor}</p>
+            <p>${meta.researchers}</p>
           </div>
-          <div class="bottom-card">
-            <h3>دانشگاه</h3>
-            <p>${meta.university} | تاریخ: ${meta.date}</p>
+          <div class="mini-card">
+            <h3>استاد راهنما</h3>
+            <p>${meta.advisor}</p>
+          </div>
+          <div class="mini-card">
+            <h3>دانشگاه و تاریخ</h3>
+            <p>${meta.university}<br>${meta.date}</p>
           </div>
         </div>
       `,30);
@@ -1355,20 +695,15 @@
 
     function downloadPDF(){
       const element = document.getElementById("book");
-
       const opt = {
         margin:0,
         filename:"تحقیق-جامع-تکنولوژی-و-تولید-محتوا.pdf",
-        image:{
-          type:"jpeg",
-          quality:0.98
-        },
+        image:{type:"jpeg",quality:0.98},
         html2canvas:{
           scale:2,
           useCORS:true,
           allowTaint:true,
-          backgroundColor:"#ffffff",
-          scrollY:0
+          backgroundColor:"#050b14"
         },
         jsPDF:{
           unit:"mm",
@@ -1377,7 +712,7 @@
         },
         pagebreak:{
           mode:["css","legacy"],
-          before:".sheet"
+          after:".sheet"
         }
       };
 
